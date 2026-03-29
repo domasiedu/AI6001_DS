@@ -1,8 +1,6 @@
-# AI6001_Project_Name_Here
-
-# PROJECT PROPOSAL  
 # AI-BASED CONNECT FOUR GAME WITH PERSISTENT GAMEPLAY
 
+# PROJECT PROPOSAL  
 ---
 
 ## PROJECT TITLE
@@ -20,7 +18,7 @@ This project aims to demonstrate the integration of game logic, artificial intel
 ---
 
 ## Objectives
-The primary objectives of this project are:
+The primary objectives of this project are;
 
 - To design and implement a fully functional Connect Four game engine capable of detecting valid moves, winning conditions, and draw scenarios.
 - To develop a non-trivial AI opponent using the Minimax algorithm with Alpha-Beta pruning to simulate intelligent gameplay behaviour.

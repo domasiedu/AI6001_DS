@@ -23,3 +23,20 @@ Board now detects column index
 and visually highlights clicked column.
 
 Verified console logs and highlight behavior.
+
+## Milestone 2 — Part 1
+
+Implemented internal board state and piece dropping logic.
+
+Red pieces now appear at the lowest available position in selected column.
+
+Verified stacking behavior and full column handling.
+
+## Milestone 2 — Part 2
+
+Implemented turn-based gameplay.
+
+Game now alternates between Player 1 (red)
+and Player 2 (yellow).
+
+Verified stacking and color switching.

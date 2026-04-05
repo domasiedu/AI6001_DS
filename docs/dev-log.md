@@ -40,3 +40,17 @@ Game now alternates between Player 1 (red)
 and Player 2 (yellow).
 
 Verified stacking and color switching.
+
+## Milestone 2 — Part 3
+
+Implemented win detection logic.
+
+Game now detects:
+
+- Horizontal wins
+- Vertical wins
+- Diagonal wins
+- Draw conditions
+
+Game stops when win or draw occurs.
+

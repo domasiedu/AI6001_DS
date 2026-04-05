@@ -6,6 +6,7 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 let selectedColumn = null;
 let board = createBoard();
+let currentPlayer = 1;
 
 canvas.width = COLS * CELL_SIZE;
 canvas.height = ROWS * CELL_SIZE;
@@ -37,10 +38,17 @@ function drawSlot(column, row, pieceValue) {
   const centerX = column * CELL_SIZE + CELL_SIZE / 2;
   const centerY = row * CELL_SIZE + CELL_SIZE / 2;
   const radius = CELL_SIZE * 0.36;
+  let slotColor = "#1a1a1a";
+
+  if (pieceValue === 1) {
+    slotColor = "#ff0000";
+  } else if (pieceValue === 2) {
+    slotColor = "#ffff00";
+  }
 
   ctx.beginPath();
   ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
-  ctx.fillStyle = pieceValue === 1 ? "#ff0000" : "#1a1a1a";
+  ctx.fillStyle = slotColor;
   ctx.fill();
   ctx.closePath();
 }
@@ -81,8 +89,12 @@ canvas.addEventListener("click", (event) => {
     selectedColumn = clickedColumn;
 
     if (availableRow !== -1) {
-      // Place the player's piece in the lowest open slot of the column.
-      board[availableRow][clickedColumn] = 1;
+      // Place the current player's piece in the lowest open slot of the column.
+      board[availableRow][clickedColumn] = currentPlayer;
+
+      // Switch turns after a successful move so the next click belongs to the other player.
+      currentPlayer = currentPlayer === 1 ? 2 : 1;
+      console.log(`Current Player: ${currentPlayer}`);
     }
 
     drawBoard(selectedColumn);

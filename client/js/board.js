@@ -8,6 +8,7 @@ let selectedColumn = null;
 let board = createBoard();
 let currentPlayer = 1;
 let gameOver = false;
+let winningCells = [];
 
 canvas.width = COLS * CELL_SIZE;
 canvas.height = ROWS * CELL_SIZE;
@@ -55,6 +56,53 @@ function countConnectedPieces(startRow, startColumn, rowStep, columnStep) {
 
   return connectedPieces;
 }
+function collectConnectedCells(startRow, startColumn, rowStep, columnStep) {
+  // Collect matching piece positions in one direction until the chain breaks.
+  const player = board[startRow][startColumn];
+  const cells = [];
+  let row = startRow + rowStep;
+  let column = startColumn + columnStep;
+
+  while (
+    row >= 0 &&
+    row < ROWS &&
+    column >= 0 &&
+    column < COLS &&
+    board[row][column] === player
+  ) {
+    cells.push({ row, column });
+    row += rowStep;
+    column += columnStep;
+  }
+
+  return cells;
+}
+
+function findWinningCells(row, column) {
+  const directions = [
+    [0, 1],   // horizontal
+    [1, 0],   // vertical
+    [1, 1],   // diagonal \
+    [1, -1],  // diagonal /
+  ];
+
+  for (const [rowStep, columnStep] of directions) {
+    const backwardCells = collectConnectedCells(row, column, -rowStep, -columnStep).reverse();
+    const forwardCells = collectConnectedCells(row, column, rowStep, columnStep);
+
+    const lineCells = [
+      ...backwardCells,
+      { row, column },
+      ...forwardCells,
+    ];
+
+    if (lineCells.length >= 4) {
+      return lineCells.slice(0, 4);
+    }
+  }
+
+  return [];
+}
 
 function checkWin(row, column) {
   // Combine left and right checks to detect horizontal connections of four.
@@ -64,6 +112,7 @@ function checkWin(row, column) {
     countConnectedPieces(row, column, 0, 1);
 
   if (horizontalCount >= 4) {
+    winningCells = findWinningCells(row, column);
     return true;
   }
 
@@ -74,6 +123,7 @@ function checkWin(row, column) {
     countConnectedPieces(row, column, 1, 0);
 
   if (verticalCount >= 4) {
+    winningCells = findWinningCells(row, column);
     return true;
   }
 
@@ -84,6 +134,7 @@ function checkWin(row, column) {
     countConnectedPieces(row, column, 1, 1);
 
   if (downwardDiagonalCount >= 4) {
+    winningCells = findWinningCells(row, column);
     return true;
   }
 
@@ -93,7 +144,13 @@ function checkWin(row, column) {
     countConnectedPieces(row, column, 1, -1) +
     countConnectedPieces(row, column, -1, 1);
 
-  return upwardDiagonalCount >= 4;
+  if (upwardDiagonalCount >= 4) {
+    winningCells = findWinningCells(row, column);
+    return true;
+  }
+
+  winningCells = [];
+  return false;
 }
 
 function checkDraw() {
@@ -112,6 +169,11 @@ function drawSlot(column, row, pieceValue) {
   const centerX = column * CELL_SIZE + CELL_SIZE / 2;
   const centerY = row * CELL_SIZE + CELL_SIZE / 2;
   const radius = CELL_SIZE * 0.36;
+  const safeWinningCells = Array.isArray(winningCells) ? winningCells : [];
+  const isWinningCell = safeWinningCells.some(
+    (cell) => cell.row === row && cell.column === column
+  );
+
   let slotColor = "#1a1a1a";
 
   if (pieceValue === 1) {
@@ -125,6 +187,15 @@ function drawSlot(column, row, pieceValue) {
   ctx.fillStyle = slotColor;
   ctx.fill();
   ctx.closePath();
+
+  if (isWinningCell) {
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius - 2, 0, Math.PI * 2);
+    ctx.strokeStyle = "#00ff00";
+    ctx.lineWidth = 5;
+    ctx.stroke();
+    ctx.closePath();
+  }
 }
 
 function drawBoard(selectedColumnIndex) {

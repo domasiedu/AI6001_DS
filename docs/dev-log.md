@@ -54,3 +54,18 @@ Game now detects:
 
 Game stops when win or draw occurs.
 
+## Milestone 2 — Part 4
+The following prompts in the /docs/prompts/ did not work 
+- m2-part4-highlight-win.md
+- m2-part4-highlight-winning-tiles.md
+  
+Implemented visual win detection logic manually using OpenAI LLM as codex failed to implement it without destroying the entire board.
+
+Game now display visual tile confirmation of the below:
+
+- Horizontal wins
+- Vertical wins
+- Diagonal wins
+- Draw conditions
+
+Game stops when win or draw occurs.

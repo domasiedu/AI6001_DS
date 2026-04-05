@@ -9,6 +9,7 @@ let board = createBoard();
 let currentPlayer = 1;
 let gameOver = false;
 let winningCells = [];
+let aiMoveTimeout = null;
 
 canvas.width = COLS * CELL_SIZE;
 canvas.height = ROWS * CELL_SIZE;
@@ -164,7 +165,94 @@ function checkDraw() {
   return true;
 }
 
+function getValidColumns() {
+  const validColumns = [];
+
+  for (let column = 0; column < COLS; column += 1) {
+    if (board[0][column] === 0) {
+      validColumns.push(column);
+    }
+  }
+
+  return validColumns;
+}
+
+function getRandomColumn() {
+  const validColumns = getValidColumns();
+
+  if (validColumns.length === 0) {
+    return null;
+  }
+
+  const randomIndex = Math.floor(Math.random() * validColumns.length);
+
+  return validColumns[randomIndex];
+}
+
+function dropPiece(column) {
+  if (gameOver) {
+    return;
+  }
+
+  const availableRow = getAvailableRow(column);
+
+  selectedColumn = column;
+
+  if (availableRow === -1) {
+    drawBoard(selectedColumn);
+    return;
+  }
+
+  const placedPlayer = currentPlayer;
+
+  // Place the current player's piece in the lowest open slot of the column.
+  board[availableRow][column] = placedPlayer;
+
+  if (checkWin(availableRow, column)) {
+    gameOver = true;
+    drawBoard(selectedColumn);
+    alert(`Player ${placedPlayer} wins!`);
+    return;
+  }
+
+  if (checkDraw()) {
+    gameOver = true;
+    drawBoard(selectedColumn);
+    alert("Game is a draw!");
+    return;
+  }
+
+  // Switch turns after a successful move so the next turn belongs to the other player.
+  currentPlayer = placedPlayer === 1 ? 2 : 1;
+  console.log(`Current Player: ${currentPlayer}`);
+
+  drawBoard(selectedColumn);
+
+  if (currentPlayer === 2) {
+    aiMoveTimeout = setTimeout(aiMove, 500);
+  }
+}
+
+function aiMove() {
+  aiMoveTimeout = null;
+
+  if (gameOver || currentPlayer !== 2) {
+    return;
+  }
+
+  const column = getRandomColumn();
+
+  if (column !== null) {
+    dropPiece(column);
+  }
+}
+
 function resetGame() {
+  if (aiMoveTimeout !== null) {
+    clearTimeout(aiMoveTimeout);
+    aiMoveTimeout = null;
+  }
+
   board = createBoard();
   currentPlayer = 1;
   gameOver = false;
@@ -230,7 +318,7 @@ function drawBoard(selectedColumnIndex) {
 }
 
 canvas.addEventListener("click", (event) => {
-  if (gameOver) {
+  if (gameOver || currentPlayer !== 1) {
     return;
   }
 
@@ -242,36 +330,7 @@ canvas.addEventListener("click", (event) => {
   const clickedColumn = Math.floor(mouseX / CELL_SIZE);
 
   if (clickedColumn >= 0 && clickedColumn < COLS) {
-    const availableRow = getAvailableRow(clickedColumn);
-
-    selectedColumn = clickedColumn;
-
-    if (availableRow !== -1) {
-      const placedPlayer = currentPlayer;
-
-      // Place the current player's piece in the lowest open slot of the column.
-      board[availableRow][clickedColumn] = placedPlayer;
-
-      if (checkWin(availableRow, clickedColumn)) {
-        gameOver = true;
-        drawBoard(selectedColumn);
-        alert(`Player ${placedPlayer} wins!`);
-        return;
-      }
-
-      if (checkDraw()) {
-        gameOver = true;
-        drawBoard(selectedColumn);
-        alert("Game is a draw!");
-        return;
-      }
-
-      // Switch turns after a successful move so the next click belongs to the other player.
-      currentPlayer = placedPlayer === 1 ? 2 : 1;
-      console.log(`Current Player: ${currentPlayer}`);
-    }
-
-    drawBoard(selectedColumn);
+    dropPiece(clickedColumn);
   }
 });
 

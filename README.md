@@ -40,24 +40,21 @@ The project follows a modular client-side structure:
 project-root/
 │
 ├── client/
-│   ├── play.html          # Main game interface
+│   ├── play.html              # Main game interface
 │   ├── css/
-│   │   └── styles.css     # Game styling
+│   │   └── styles.css         # Game styling
 │   └── js/
-│       └── board.js       # Game logic and rendering
+│       └── board.js           # Game logic and rendering
 │
 ├── docs/
-│   └── prompts/           # Codex prompts used during development
-|   ├── screenshots/       # Implementation shots
-│   ├── dev-log            # Notes
-│   
+│   └── prompts/               # Codex prompts used during development
+│   ├── screenshots/           # Implementation shots
+│   ├── dev-log                # Notes
 │
-|
 ├── 2026-03-29 - Project Proposal/
-|  └── README.md           # Project Proposal
-|
-└── README.md              # Project documentation
-
+│   └── README.md              # Project Proposal
+│
+└── README.md                  # Project documentation
 
 This structure separates user interface elements from game logic to improve maintainability and readability.
 

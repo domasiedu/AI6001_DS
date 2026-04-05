@@ -69,3 +69,25 @@ Game now display visual tile confirmation of the below:
 - Draw conditions
 
 Game stops when win or draw occurs.
+
+## Milestone 3 — Part 1: Random AI Move
+
+**Objective:**  
+Introduce an AI opponent that makes random valid moves.
+
+**Summary:**  
+In this milestone, Player 2 was converted from a human-controlled player into an automated AI opponent. The AI selects a random valid column and drops a piece after a short delay following the human player's move.
+
+**Implementation Details:**  
+- Created `getValidColumns()` to identify available columns.
+- Implemented `getRandomColumn()` to select a random valid move.
+- Added `aiMove()` to perform automated piece placement.
+- Integrated AI triggering using `setTimeout()` after Player 1's turn.
+- Ensured the AI avoids selecting full columns.
+- Maintained compatibility with existing win detection and restart logic.
+
+**Outcome:**  
+The system now supports Human vs AI gameplay using a random move strategy. The game flow remains stable, and all previous features such as win detection, highlighting, and restart functionality continue to work correctly.
+
+**Status:**  
+Completed and tested successfully.

@@ -7,6 +7,7 @@ const ctx = canvas.getContext("2d");
 let selectedColumn = null;
 let board = createBoard();
 let currentPlayer = 1;
+let gameOver = false;
 
 canvas.width = COLS * CELL_SIZE;
 canvas.height = ROWS * CELL_SIZE;
@@ -31,6 +32,79 @@ function getAvailableRow(column) {
   }
 
   return -1;
+}
+
+function countConnectedPieces(startRow, startColumn, rowStep, columnStep) {
+  // Count matching pieces in one direction until the chain breaks.
+  const player = board[startRow][startColumn];
+  let connectedPieces = 0;
+  let row = startRow + rowStep;
+  let column = startColumn + columnStep;
+
+  while (
+    row >= 0 &&
+    row < ROWS &&
+    column >= 0 &&
+    column < COLS &&
+    board[row][column] === player
+  ) {
+    connectedPieces += 1;
+    row += rowStep;
+    column += columnStep;
+  }
+
+  return connectedPieces;
+}
+
+function checkWin(row, column) {
+  // Combine left and right checks to detect horizontal connections of four.
+  const horizontalCount =
+    1 +
+    countConnectedPieces(row, column, 0, -1) +
+    countConnectedPieces(row, column, 0, 1);
+
+  if (horizontalCount >= 4) {
+    return true;
+  }
+
+  // Combine upward and downward checks to detect vertical connections of four.
+  const verticalCount =
+    1 +
+    countConnectedPieces(row, column, -1, 0) +
+    countConnectedPieces(row, column, 1, 0);
+
+  if (verticalCount >= 4) {
+    return true;
+  }
+
+  // Combine top-left and bottom-right checks for "\" diagonal wins.
+  const downwardDiagonalCount =
+    1 +
+    countConnectedPieces(row, column, -1, -1) +
+    countConnectedPieces(row, column, 1, 1);
+
+  if (downwardDiagonalCount >= 4) {
+    return true;
+  }
+
+  // Combine bottom-left and top-right checks for "/" diagonal wins.
+  const upwardDiagonalCount =
+    1 +
+    countConnectedPieces(row, column, 1, -1) +
+    countConnectedPieces(row, column, -1, 1);
+
+  return upwardDiagonalCount >= 4;
+}
+
+function checkDraw() {
+  // If the top row is full, no more valid moves remain.
+  for (let column = 0; column < COLS; column += 1) {
+    if (board[0][column] === 0) {
+      return false;
+    }
+  }
+
+  return true;
 }
 
 function drawSlot(column, row, pieceValue) {
@@ -76,6 +150,10 @@ function drawBoard(selectedColumnIndex) {
 }
 
 canvas.addEventListener("click", (event) => {
+  if (gameOver) {
+    return;
+  }
+
   // Convert the mouse position into canvas coordinates.
   const canvasBounds = canvas.getBoundingClientRect();
   const mouseX = event.clientX - canvasBounds.left;
@@ -89,11 +167,27 @@ canvas.addEventListener("click", (event) => {
     selectedColumn = clickedColumn;
 
     if (availableRow !== -1) {
+      const placedPlayer = currentPlayer;
+
       // Place the current player's piece in the lowest open slot of the column.
-      board[availableRow][clickedColumn] = currentPlayer;
+      board[availableRow][clickedColumn] = placedPlayer;
+
+      if (checkWin(availableRow, clickedColumn)) {
+        gameOver = true;
+        drawBoard(selectedColumn);
+        alert(`Player ${placedPlayer} wins!`);
+        return;
+      }
+
+      if (checkDraw()) {
+        gameOver = true;
+        drawBoard(selectedColumn);
+        alert("Game is a draw!");
+        return;
+      }
 
       // Switch turns after a successful move so the next click belongs to the other player.
-      currentPlayer = currentPlayer === 1 ? 2 : 1;
+      currentPlayer = placedPlayer === 1 ? 2 : 1;
       console.log(`Current Player: ${currentPlayer}`);
     }
 

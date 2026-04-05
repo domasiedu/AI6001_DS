@@ -164,6 +164,15 @@ function checkDraw() {
   return true;
 }
 
+function resetGame() {
+  board = createBoard();
+  currentPlayer = 1;
+  gameOver = false;
+  winningCells = [];
+  selectedColumn = null;
+  drawBoard();
+}
+
 function drawSlot(column, row, pieceValue) {
   // Center each circular slot within its grid cell.
   const centerX = column * CELL_SIZE + CELL_SIZE / 2;
@@ -265,5 +274,9 @@ canvas.addEventListener("click", (event) => {
     drawBoard(selectedColumn);
   }
 });
+
+document
+  .getElementById("restartButton")
+  .addEventListener("click", resetGame);
 
 drawBoard(selectedColumn);

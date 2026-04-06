@@ -132,3 +132,23 @@ The system now supports safe board simulation, enabling the next stage of AI log
 
 **Status:**  
 Completed and verified.
+
+## Milestone 3 — Part 3B: Simulated Win Detection
+
+**Objective:**  
+Enable the AI to detect winning states on simulated board positions.
+
+**Summary:**  
+This milestone introduced simulation-based win detection functions that allow the AI to evaluate whether a move results in a winning configuration without affecting the live game state.
+
+**Implementation Details:**  
+- Implemented `countConnectedSimulated()` to count adjacent pieces in a direction on simulated boards.
+- Added `checkWinSimulated()` to determine if a simulated move produces a winning condition.
+- Reused directional logic consistent with live win detection.
+- Ensured no changes affected visible gameplay.
+
+**Outcome:**  
+The AI can now evaluate winning conditions on simulated boards, enabling future decision-making logic required for the Minimax algorithm.
+
+**Status:**  
+Completed and verified.

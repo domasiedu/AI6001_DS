@@ -54,6 +54,73 @@ function simulateDrop(simBoard, row, column, player) {
   simBoard[row][column] = player;
 }
 
+function countConnectedSimulated(
+  simBoard,
+  startRow,
+  startColumn,
+  rowStep,
+  columnStep,
+  player
+) {
+  let count = 0;
+  let row = startRow + rowStep;
+  let column = startColumn + columnStep;
+
+  while (
+    row >= 0 &&
+    row < ROWS &&
+    column >= 0 &&
+    column < COLS &&
+    simBoard[row][column] === player
+  ) {
+    count += 1;
+    row += rowStep;
+    column += columnStep;
+  }
+
+  return count;
+}
+
+function checkWinSimulated(simBoard, row, column, player) {
+  const horizontal =
+    1 +
+    countConnectedSimulated(simBoard, row, column, 0, -1, player) +
+    countConnectedSimulated(simBoard, row, column, 0, 1, player);
+
+  if (horizontal >= 4) {
+    return true;
+  }
+
+  const vertical =
+    1 +
+    countConnectedSimulated(simBoard, row, column, -1, 0, player) +
+    countConnectedSimulated(simBoard, row, column, 1, 0, player);
+
+  if (vertical >= 4) {
+    return true;
+  }
+
+  const diagonal1 =
+    1 +
+    countConnectedSimulated(simBoard, row, column, -1, -1, player) +
+    countConnectedSimulated(simBoard, row, column, 1, 1, player);
+
+  if (diagonal1 >= 4) {
+    return true;
+  }
+
+  const diagonal2 =
+    1 +
+    countConnectedSimulated(simBoard, row, column, 1, -1, player) +
+    countConnectedSimulated(simBoard, row, column, -1, 1, player);
+
+  if (diagonal2 >= 4) {
+    return true;
+  }
+
+  return false;
+}
+
 function countConnectedPieces(startRow, startColumn, rowStep, columnStep) {
   // Count matching pieces in one direction until the chain breaks.
   const player = board[startRow][startColumn];

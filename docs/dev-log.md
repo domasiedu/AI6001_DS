@@ -152,3 +152,44 @@ The AI can now evaluate winning conditions on simulated boards, enabling future 
 
 **Status:**  
 Completed and verified.
+
+## Milestone 3 — Part 3C: Minimax Core Implementation
+
+**Objective:**  
+Implement the Minimax algorithm to enable strategic AI decision-making.
+
+**Summary:**  
+This milestone replaced the random AI logic with a depth-limited Minimax algorithm. The AI now evaluates simulated board states and selects moves based on calculated scores.
+
+**Implementation Details:**  
+- Implemented `evaluateBoard()` to assign scores to board states.
+- Created recursive `minimax()` function for move simulation.
+- Introduced depth-limited recursion (depth = 3).
+- Updated `aiMove()` to use Minimax-generated column selection.
+- Ensured compatibility with existing board simulation logic.
+
+**Outcome:**  
+The AI now demonstrates strategic gameplay behavior, favoring stronger board positions rather than random moves.
+
+**Status:**  
+Completed and tested.
+
+## Milestone 3 — Part 3D: Winning and Blocking Priority Logic
+
+**Objective:**  
+Enhance AI intelligence by ensuring immediate wins and defensive blocking behavior.
+
+**Summary:**  
+This milestone introduced tactical move prioritization before executing the Minimax algorithm. The AI now actively detects winning opportunities and blocks opponent threats before performing deeper evaluations.
+
+**Implementation Details:**  
+- Implemented `findWinningMove()` to detect immediate winning opportunities.
+- Updated `aiMove()` to prioritize winning moves.
+- Added defensive logic to block opponent winning moves.
+- Retained Minimax decision-making as fallback logic.
+
+**Outcome:**  
+The AI now demonstrates both tactical awareness and strategic planning, significantly improving gameplay competitiveness.
+
+**Status:**  
+Completed and verified.

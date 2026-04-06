@@ -297,6 +297,27 @@ function evaluateBoard(simBoard, player) {
   return score;
 }
 
+function findWinningMove(player) {
+  const validColumns = getValidColumns();
+
+  for (const column of validColumns) {
+    const tempBoard = copyBoard(board);
+    const row = getNextOpenRow(tempBoard, column);
+
+    if (row === null) {
+      continue;
+    }
+
+    simulateDrop(tempBoard, row, column, player);
+
+    if (checkWinSimulated(tempBoard, row, column, player)) {
+      return column;
+    }
+  }
+
+  return null;
+}
+
 function minimax(simBoard, depth, maximizingPlayer) {
   const validColumns = getValidColumns(simBoard);
 
@@ -422,8 +443,19 @@ function aiMove() {
     return;
   }
 
-  const result = minimax(board, 3, true);
-  const column = result.column;
+  // 1. Take a winning move immediately when available.
+  let column = findWinningMove(2);
+
+  // 2. Block the human player's immediate winning move.
+  if (column === null) {
+    column = findWinningMove(1);
+  }
+
+  // 3. Otherwise, fall back to the Minimax search.
+  if (column === null) {
+    const result = minimax(board, 3, true);
+    column = result.column;
+  }
 
   if (column !== null) {
     dropPiece(column);

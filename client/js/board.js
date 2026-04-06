@@ -250,11 +250,11 @@ function checkDraw() {
   return true;
 }
 
-function getValidColumns() {
+function getValidColumns(targetBoard = board) {
   const validColumns = [];
 
   for (let column = 0; column < COLS; column += 1) {
-    if (board[0][column] === 0) {
+    if (targetBoard[0][column] === 0) {
       validColumns.push(column);
     }
   }
@@ -272,6 +272,100 @@ function getRandomColumn() {
   const randomIndex = Math.floor(Math.random() * validColumns.length);
 
   return validColumns[randomIndex];
+}
+
+function evaluateBoard(simBoard, player) {
+  const opponent = player === 1 ? 2 : 1;
+  let score = 0;
+
+  // Favor center control because it creates more connection opportunities.
+  const centerColumn = Math.floor(COLS / 2);
+  let centerCount = 0;
+  let opponentCenterCount = 0;
+
+  for (let row = 0; row < ROWS; row += 1) {
+    if (simBoard[row][centerColumn] === player) {
+      centerCount += 1;
+    } else if (simBoard[row][centerColumn] === opponent) {
+      opponentCenterCount += 1;
+    }
+  }
+
+  score += centerCount * 3;
+  score -= opponentCenterCount * 3;
+
+  return score;
+}
+
+function minimax(simBoard, depth, maximizingPlayer) {
+  const validColumns = getValidColumns(simBoard);
+
+  if (depth === 0 || validColumns.length === 0) {
+    return {
+      score: evaluateBoard(simBoard, 2),
+    };
+  }
+
+  if (maximizingPlayer) {
+    let maxEval = -Infinity;
+    let bestColumn = validColumns[0];
+
+    for (const column of validColumns) {
+      const tempBoard = copyBoard(simBoard);
+      const row = getNextOpenRow(tempBoard, column);
+
+      if (row === null) {
+        continue;
+      }
+
+      simulateDrop(tempBoard, row, column, 2);
+
+      if (checkWinSimulated(tempBoard, row, column, 2)) {
+        return {
+          column,
+          score: Infinity,
+        };
+      }
+
+      const evaluation = minimax(tempBoard, depth - 1, false).score;
+
+      if (evaluation > maxEval) {
+        maxEval = evaluation;
+        bestColumn = column;
+      }
+    }
+
+    return {
+      column: bestColumn,
+      score: maxEval,
+    };
+  }
+
+  let minEval = Infinity;
+
+  for (const column of validColumns) {
+    const tempBoard = copyBoard(simBoard);
+    const row = getNextOpenRow(tempBoard, column);
+
+    if (row === null) {
+      continue;
+    }
+
+    simulateDrop(tempBoard, row, column, 1);
+
+    if (checkWinSimulated(tempBoard, row, column, 1)) {
+      return {
+        score: -Infinity,
+      };
+    }
+
+    const evaluation = minimax(tempBoard, depth - 1, true).score;
+    minEval = Math.min(minEval, evaluation);
+  }
+
+  return {
+    score: minEval,
+  };
 }
 
 function switchPlayer() {
@@ -328,7 +422,8 @@ function aiMove() {
     return;
   }
 
-  const column = getRandomColumn();
+  const result = minimax(board, 3, true);
+  const column = result.column;
 
   if (column !== null) {
     dropPiece(column);

@@ -91,3 +91,24 @@ The system now supports Human vs AI gameplay using a random move strategy. The g
 
 **Status:**  
 Completed and tested successfully.
+
+## Milestone 3 — Part 2: Structured AI Turn Handling
+
+**Objective:**  
+Refactor the game logic to support structured turn handling for both human and AI players.
+
+**Summary:**  
+This milestone introduced a centralized turn-processing workflow. The new structure ensures consistent handling of win detection, draw detection, and player switching across both human and AI moves.
+
+**Implementation Details:**  
+- Created `processTurn()` to handle game outcome checks.
+- Implemented `switchPlayer()` to manage player transitions.
+- Updated `dropPiece()` to delegate turn logic to `processTurn()`.
+- Ensured both human and AI moves follow the same execution path.
+- Maintained compatibility with restart and win-highlight features.
+
+**Outcome:**  
+The system now uses a modular turn-processing architecture, improving maintainability and preparing the codebase for the implementation of the Minimax AI algorithm.
+
+**Status:**  
+Completed and verified.

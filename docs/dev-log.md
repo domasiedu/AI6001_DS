@@ -112,3 +112,23 @@ The system now uses a modular turn-processing architecture, improving maintainab
 
 **Status:**  
 Completed and verified.
+
+## Milestone 3 — Part 3A: Board Simulation Setup
+
+**Objective:**  
+Prepare the system for AI decision-making by enabling simulated board operations.
+
+**Summary:**  
+This milestone introduced helper functions that allow the AI to simulate potential moves on a copied version of the board without affecting the live game state.
+
+**Implementation Details:**  
+- Implemented `copyBoard()` to create deep copies of the board.
+- Added `getNextOpenRow()` to locate valid row positions.
+- Created `simulateDrop()` to place simulated moves on test boards.
+- Ensured no changes affected visible gameplay behavior.
+
+**Outcome:**  
+The system now supports safe board simulation, enabling the next stage of AI logic development using the Minimax algorithm.
+
+**Status:**  
+Completed and verified.

@@ -36,6 +36,24 @@ function getAvailableRow(column) {
   return -1;
 }
 
+function copyBoard(originalBoard) {
+  return originalBoard.map((row) => [...row]);
+}
+
+function getNextOpenRow(simBoard, column) {
+  for (let row = ROWS - 1; row >= 0; row -= 1) {
+    if (simBoard[row][column] === 0) {
+      return row;
+    }
+  }
+
+  return null;
+}
+
+function simulateDrop(simBoard, row, column, player) {
+  simBoard[row][column] = player;
+}
+
 function countConnectedPieces(startRow, startColumn, rowStep, columnStep) {
   // Count matching pieces in one direction until the chain breaks.
   const player = board[startRow][startColumn];

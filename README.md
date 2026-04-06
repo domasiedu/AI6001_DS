@@ -32,26 +32,10 @@ Before running the project, ensure the following software is installed:
 No additional frameworks or package installations are required since the project is implemented using **vanilla JavaScript, HTML, and CSS**.
 
 ---
-# Project Structure (Updated incrementally)
+# Project Structure (Will be Updated incrementally)
 
-project-root/
-|
-+-- client/
-|   +-- play.html              # Main game interface
-|   +-- css/
-|   |   +-- styles.css         # Game styling
-|   +-- js/
-|       +-- board.js           # Game logic and rendering
-|
-+-- docs/
-|   +-- prompts/               # Codex prompts used during development
-|   +-- screenshots/           # Implementation shots
-|   +-- dev-log                # Notes
-|   +-- 2026-03-29 - Project Proposal/
-|   |   +-- README.md          # Project Proposal
-|   +-- README.md              # Project documentation
-|
-+-- README.md                  # Project documentation
+![Structure](docs/screenshots/structure.png)
+
 ---
 
 

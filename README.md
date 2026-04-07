@@ -1,42 +1,89 @@
-# AI-BASED CONNECT FOUR GAME WITH PERSISTENT GAMEPLAY
+# AI-BASED CHESSS GAME WITH PERSISTENT GAMEPLAY
 
-# Project Group Members:
+# Project Group Members
 
-* Dominic Asiedu (202296254, dasiedu@mun.ca) 
-* Sifat Sabrina Rahman (202286725,ssrahman@mun.ca)
+- Dominic Asiedu (202296254, dasiedu@mun.ca)  
+- Sifat Sabrina Rahman (202286725, ssrahman@mun.ca)
 
+---
 
 # Project URL
 
-* Paste your hosted web application URL here so I can test it
-  
-# Project Videos:
+Link to be shared
 
-* Project Presentation: YouTube URL
 
-# Project Setup / Installation:
+---
+
+# Project Videos
+
+Link to be shared
+
+## Project Presentation
+
+Link to be shared
+
+---
+
+# Project Setup / Installation
 
 ## System Requirements
 
 Before running the project, ensure the following software is installed:
 
-- A modern web browser  
-  *(Recommended: Google Chrome, Microsoft Edge, or Firefox)*
+- **Node.js (Version 18 or higher)**  
+  Required to run the backend server.
+
+  Download:  
+  https://nodejs.org/
+
+- **MongoDB (Local or Cloud Instance)**  
+  Required for storing user accounts, game states, and match history.
+
+  Download:  
+  https://www.mongodb.com/
+
+- **Docker (Optional — for deployment stage)**  
+  Required later for containerized deployment.
+
+  Download:  
+  https://www.docker.com/
 
 - **Visual Studio Code (VS Code)**  
-  Used to open and manage the project files.
+  Recommended IDE for editing and running the project.
 
-- **Live Server Extension (VS Code)**  
-  Used to run the web application locally for now.
+  Download:  
+  https://code.visualstudio.com/
 
-No additional frameworks or package installations are required since the project is implemented using **vanilla JavaScript, HTML, and CSS**.
+- **Modern Web Browser**  
+  Recommended:
+
+  - Google Chrome  
+  - Microsoft Edge  
+  - Mozilla Firefox
 
 ---
-# Project Structure (Will be Updated incrementally)
 
-![Structure](docs/screenshots/structure.png)
+# Installation Steps
 
----
+Follow these steps to run the project locally.
 
+## Step 1 — Clone Repository
 
+```bash
+git clone <repository-url>
+cd my-chess-game
 
+## Step 2 — Install Backend Dependencies
+
+```Navigate to the project root directory:
+
+```bash
+cd my-chess-game
+
+```Install Dependencies
+
+```npm install express cors dotenv mongoose
+
+```Start the server
+
+```node server/server.js

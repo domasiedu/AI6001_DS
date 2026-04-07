@@ -1,88 +1,90 @@
-# AI-BASED CONNECT FOUR GAME WITH PERSISTENT GAMEPLAY
+# Project Proposal  
+## AI-Powered Chess Web Application
 
-# PROJECT PROPOSAL  
----
+### Project Title  
+**AI-Based Chess Web Application with Persistent Gameplay and Replay System**
 
-## PROJECT TITLE
-Development of an AI-Powered Connect Four Game with Persistent Game State and Replay Functionality Using CodEx
+### Project Overview  
 
----
+The objective of this project is to design and implement a web-based chess application that integrates artificial intelligence (AI) to provide an intelligent gameplay experience. The application will allow users to play chess against an AI-controlled opponent directly within a browser-based interface. In addition to gameplay functionality, the system will include user authentication, persistent game storage, and the ability to review previously completed matches through a replay mechanism.
 
-## Project Overview
-This project proposes the design and implementation of an interactive web-based Connect Four game enhanced with an intelligent Artificial Intelligence (AI) opponent. The system will allow users to play against an AI agent that makes strategic decisions using classical search algorithms. In addition to gameplay, the system will support user authentication, persistent game storage, game resumption, and replay visualization, enabling a complete and engaging user experience.
-
-The application will be implemented as a full-stack web-based system, with a browser-based graphical interface rendered using HTML Canvas and JavaScript, and a backend service built using Node.js and Express.js. Game data and user accounts will be stored in a MongoDB database. The final system will be containerized using Docker to ensure reproducibility and ease of deployment.
-
-This project aims to demonstrate the integration of game logic, artificial intelligence, persistent data storage, and scalable software architecture into a cohesive application.
+This project aims to demonstrate the integration of modern web technologies, backend services, database systems, and AI-driven decision-making within a structured and scalable software architecture. The system will be built incrementally using AI-assisted development tools, allowing for experimentation, iteration, and documentation of the development workflow.
 
 ---
 
-## Objectives
-The primary objectives of this project are;
+### Objectives  
 
-- To design and implement a fully functional Connect Four game engine capable of detecting valid moves, winning conditions, and draw scenarios.
-- To develop a non-trivial AI opponent using the Minimax algorithm with Alpha-Beta pruning to simulate intelligent gameplay behaviour.
-- To implement user authentication allowing players to create accounts and securely log in.
-- To enable persistent gameplay, allowing users to save unfinished games and resume them later.
-- To provide game history and replay functionality, enabling visualisation of previously completed games.
-- To containerise the system using Docker, ensuring portability and consistent deployment.
-- To document the incremental development process and demonstrate the use of AI tools in generating, debugging, and improving software components.
+The primary objectives of this project include:
 
----
-
-## System Description
-The proposed system will consist of two major components: a client-side application and a server-side backend.
-
-The client-side interface will display the Connect Four board using HTML Canvas and allow users to interact with the game through mouse input. Game logic such as move validation and win detection, will be handled through modular JavaScript components.
-
-The server-side component will manage user authentication, game persistence, and AI computations where necessary. RESTful APIs will be used to exchange data between the client and server. MongoDB will store structured game data, including board states and move sequences.
-
-The AI opponent will be implemented using the Minimax algorithm with Alpha-Beta pruning, allowing the system to evaluate multiple possible moves and select the optimal strategy based on heuristic scoring rules. Multiple difficulty levels will be supported by varying search depth.
+- Develop a browser-based chess game using HTML Canvas for rendering the game board and pieces.
+- Implement a non-trivial AI opponent capable of making intelligent chess moves using decision-making algorithms such as Minimax with evaluation heuristics.
+- Design a backend system using Node.js and Express to manage gameplay logic, AI interactions, and user requests.
+- Integrate a MongoDB database to store user accounts, game states, and completed game histories.
+- Provide user authentication to enable secure login and persistent game sessions.
+- Implement a replay feature allowing users to review previously played games.
+- Containerize the application using Docker to enable consistent deployment across environments.
 
 ---
 
-## Artificial Intelligence Component
-The AI opponent will use a heuristic search-based decision model, specifically the Minimax algorithm enhanced with Alpha-Beta pruning for performance optimization.
+### System Architecture  
 
-The AI will evaluate game states using scoring functions based on:
+The proposed system follows a modular client-server architecture. The frontend will be responsible for rendering the chessboard interface and capturing player interactions. The backend server will handle authentication, gameplay validation, AI decision requests, and database operations.
 
-- Potential winning combinations
-- Blocking opponent threats
-- Board position control (e.g., center column advantage)
-- Immediate winning opportunities
+The system architecture consists of the following major components:
 
-Difficulty levels will be implemented by adjusting search depth, allowing the AI to exhibit varying levels of strategic sophistication.
+- **Client Layer:**  
+  HTML, CSS, and JavaScript-based interface responsible for rendering the chessboard using Canvas and handling user interaction.
 
-This approach ensures the AI demonstrates intelligent, non-trivial gameplay behavior, satisfying the requirement for meaningful AI integration.
+- **Server Layer:**  
+  Node.js and Express-based backend responsible for routing requests, validating game logic, and coordinating AI decision-making.
 
----
+- **Game Engine Layer:**  
+  A chess logic module responsible for validating legal moves, maintaining board state, and enforcing chess rules.
 
-## Expected Features
-The final system will support the following core features:
+- **AI Engine Layer:**  
+  A dedicated AI module responsible for evaluating board states and generating optimal moves based on search algorithms.
 
-- Interactive Connect Four gameplay
-- Human vs AI game mode
-- Intelligent AI opponent with adjustable difficulty
-- User registration and login system
-- Save and resume ongoing games
-- Game history tracking
-- Game replay visualization
-- Responsive graphical interface
-- Docker-based deployment environment
+- **Database Layer:**  
+  MongoDB used to store user data, saved games, and move histories.
+
+- **Deployment Layer:**  
+  Docker containers used to package the application and ensure portability across systems.
+
+This layered structure promotes maintainability, scalability, and separation of concerns across different system responsibilities.
 
 ---
 
-## Expected Outcomes
-By the completion of this project, the system will demonstrate:
+### AI Implementation Strategy  
 
-- A fully functional AI-driven game application
-- Reliable persistent storage of user sessions and gameplay
-- Structured modular software architecture
-- Practical implementation of AI search algorithms
-- Effective use of containerization technologies
-- Documented iterative development using AI-assisted coding tools
+The artificial intelligence component will be implemented using a search-based decision algorithm, most likely the Minimax algorithm with depth-limited evaluation. The AI will evaluate possible future moves and select the most optimal move based on board state heuristics such as piece value and positional advantage.
+
+This component will run on the server-side and will be exposed through an API endpoint that returns computed moves to the client. The modular design allows the AI to evolve independently of the core game logic.
 
 ---
 
-## Conclusion
-This project will contribute to the understanding of how classical artificial intelligence algorithms can be applied within interactive web-based systems. By combining algorithmic decision-making with scalable system architecture, the project will demonstrate the feasibility and effectiveness of integrating intelligent agents into user-facing software environments.
+### Expected Outcomes  
+
+Upon completion, the project will deliver a fully functional chess web application that allows users to:
+
+- Play chess against an AI opponent
+- Log in and manage gameplay sessions
+- Save and resume games
+- View previously played matches
+- Replay historical game sequences
+- Interact with a responsive and intuitive web interface
+
+Additionally, the project will demonstrate practical knowledge in AI-assisted software development, system architecture design, web application deployment, and incremental feature development using modern development tools.
+
+---
+
+### Development Approach  
+
+The project will be developed incrementally using AI-assisted coding tools such as Codex within an integrated development environment. Each system component will be implemented in phases, starting from foundational infrastructure, followed by gameplay logic, AI integration, database connectivity, and deployment.
+
+Throughout development, all prompts, outputs, design decisions, and encountered errors will be documented to support analysis of AI-assisted development workflows. This documentation will form a critical part of the final project presentation and evaluation.
+
+---
+
+### Conclusion  
+
+This project will demonstrate the practical application of artificial intelligence within a structured web-based software system. By combining game logic, AI reasoning, persistent data storage, and containerized deployment, the system will showcase a comprehensive full-stack implementation that highlights both technical depth and architectural design capability.

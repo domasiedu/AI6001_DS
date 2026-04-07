@@ -72,18 +72,35 @@ Follow these steps to run the project locally.
 ```bash
 git clone <repository-url>
 cd my-chess-game
+```
 
 ## Step 2 — Install Backend Dependencies
 
-```Navigate to the project root directory:
+Navigate to the project root directory:
 
 ```bash
 cd my-chess-game
+```
 
-```Install Dependencies
+## Step 3- Install Dependencies
+```bash
+npm install express cors dotenv mongoose
+```
+## Step 4 - configure .env
 
-```npm install express cors dotenv mongoose
+```bash
+server/.env
+PORT=3000
+MONGO_URI=mongodb://localhost:27017/chessdb
+```
 
-```Start the server
+## step 5 - Start the server
+```bash
+node server/server.js
+```
 
-```node server/server.js
+## Step 6 - Open the application browser
+```bash
+http://localhost:3000
+
+```

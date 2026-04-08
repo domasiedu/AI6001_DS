@@ -298,3 +298,48 @@ Capture logic to be implemented next.
 
 Pawn movement validation confirmed working.
 Ready to implement pawn capture logic.
+
+## Dev Log — Pawn Capture Logic
+
+**Date:** [Today]
+
+### Completed:
+
+- Implemented pawn diagonal capture logic
+- Added enemy piece detection
+- Prevented diagonal movement into empty squares
+- Prevented forward capture attempts
+- Verified capture functionality
+
+### Tests Performed:
+
+- Pawn forward movement
+- Pawn double movement
+- Pawn illegal movement rejection
+- Pawn capture validation
+
+### Status:
+
+Pawn logic fully implemented.
+Ready to implement knight movement rules.
+
+## Dev Log — Knight Movement Implementation
+
+**Date:** [Today]
+
+### Completed:
+
+- Implemented knight movement validation
+- Integrated knight logic into move engine
+- Verified L-shaped movement logic
+- Blocked invalid knight movement
+
+### Tests Performed:
+
+- Valid knight move
+- Invalid knight move rejection
+
+### Status:
+
+Knight movement operational.
+Ready to implement rook movement logic.

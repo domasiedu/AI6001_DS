@@ -287,3 +287,51 @@ try {
   console.log(err.message);
 
 }
+
+/* ===========================
+   Test 13: King Move (Valid)
+=========================== */
+
+try {
+
+  let fen = getInitialBoard();
+
+  // Move pawn to free king
+  fen = movePiece(fen, 6, 4, 5, 4);
+
+  // Move king
+  fen = movePiece(fen, 7, 4, 6, 4);
+
+  console.log("\nTest 13 (King Move): ✅ PASSED");
+  console.log(fen);
+
+} catch (err) {
+
+  console.log("\nTest 13 (King Move): ❌ FAILED");
+  console.log(err.message);
+
+}
+
+
+/* ===========================
+   Test 14: King Move (Invalid)
+=========================== */
+
+try {
+
+  let fen = getInitialBoard();
+
+  movePiece(
+    fen,
+    7, 4,
+    5, 4   // too far
+  );
+
+  console.log("\nTest 14 (King Invalid): ❌ SHOULD FAIL");
+
+} catch (err) {
+
+  console.log("\nTest 14 (King Invalid): ✅ CORRECTLY FAILED");
+  console.log(err.message);
+
+}

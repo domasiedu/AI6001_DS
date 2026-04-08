@@ -408,3 +408,24 @@ Ready to implement queen movement logic.
 
 Queen movement operational.
 Ready to implement king movement logic.
+
+## Dev Log — King Movement Implementation
+
+**Date:** [Today]
+
+### Completed:
+
+- Implemented king movement validation
+- Added one-square movement logic
+- Blocked multi-square king movement
+- Verified directional movement correctness
+
+### Tests Performed:
+
+- Valid king movement test
+- Invalid king movement rejection
+
+### Status:
+
+All chess piece movement implemented successfully.
+Ready to implement check detection logic.

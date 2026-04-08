@@ -213,3 +213,54 @@ Used actual MongoDB user `_id` as `userId`.
 ### Status:
 
 Game creation API successfully tested.
+
+## Dev Log — Board Parser Implementation
+
+**Date:** [Today]
+
+### Completed:
+
+- Implemented FEN parsing logic
+- Converted FEN string into 2D board array
+- Represented empty squares as null
+- Verified 8x8 board structure
+
+### Status:
+
+Board parsing utility successfully implemented.
+
+## Dev Log — FEN Generator Implementation
+
+**Date:** [Today]
+
+### Completed:
+
+- Implemented board-to-FEN conversion
+- Counted empty squares correctly
+- Generated valid FEN format
+- Ensured compatibility with parser
+
+### Status:
+
+FEN generator utility successfully implemented.
+
+## Dev Log — Initial Move Engine Test
+
+**Date:** [Today]
+
+### Completed:
+
+- Created test script for piece movement
+- Tested pawn movement (e2 → e4)
+- Verified FEN parsing accuracy
+- Verified FEN regeneration accuracy
+- Confirmed board state update
+
+### Result:
+
+Move engine successfully updates board state.
+
+### Status:
+
+Basic piece movement operational.
+Ready to implement movement validation rules.

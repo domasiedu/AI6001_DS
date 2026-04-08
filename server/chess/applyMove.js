@@ -27,12 +27,18 @@ function applyMove(game, fromRow, fromCol, toRow, toCol) {
     game.moves = [];
   }
 
-  game.moves.push({
-    fromRow,
-    fromCol,
-    toRow,
-    toCol,
-  });
+  const movingPiece = board[fromRow][fromCol];
+  const capturedPiece = board[toRow][toCol] || null;
+
+game.moves.push({
+  fromRow,
+  fromCol,
+  toRow,
+  toCol,
+  piece: movingPiece,
+  captured: capturedPiece,
+  timestamp: new Date(),
+});
 
   game.boardState = newFEN;
   game.turn = opponentColor;

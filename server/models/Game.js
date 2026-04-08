@@ -12,6 +12,9 @@ const gameSchema = new mongoose.Schema({
     fromCol: Number,
     toRow: Number,
     toCol: Number,
+    piece: String,
+    captured: String,
+    timestamp: Date,
   }
 ],
   boardState: {

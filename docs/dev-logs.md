@@ -386,3 +386,25 @@ Ready to implement bishop movement logic.
 
 Bishop movement operational.
 Ready to implement queen movement logic.
+
+## Dev Log — Queen Movement Implementation
+
+**Date:** [Today]
+
+### Completed:
+
+- Implemented queen movement validation
+- Combined rook and bishop movement logic
+- Verified horizontal movement
+- Verified vertical movement
+- Verified diagonal movement
+
+### Tests Performed:
+
+- Blocked queen movement test
+- Valid queen movement test
+
+### Status:
+
+Queen movement operational.
+Ready to implement king movement logic.

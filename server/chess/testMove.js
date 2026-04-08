@@ -239,3 +239,51 @@ try {
   console.log(err.message);
 
 }
+
+/* ===========================
+   Test 11: Queen Blocked
+=========================== */
+
+try {
+
+  let fen = getInitialBoard();
+
+  movePiece(
+    fen,
+    7, 3,   // queen at d1
+    5, 3    // blocked by pawn
+  );
+
+  console.log("\nTest 11 (Queen Blocked): ❌ SHOULD FAIL");
+
+} catch (err) {
+
+  console.log("\nTest 11 (Queen Blocked): ✅ CORRECTLY FAILED");
+  console.log(err.message);
+
+}
+
+
+/* ===========================
+   Test 12: Queen Move Valid
+=========================== */
+
+try {
+
+  let fen = getInitialBoard();
+
+  // Move pawn out of queen path
+  fen = movePiece(fen, 6, 3, 4, 3);
+
+  // Move queen
+  fen = movePiece(fen, 7, 3, 5, 3);
+
+  console.log("\nTest 12 (Queen Move): ✅ PASSED");
+  console.log(fen);
+
+} catch (err) {
+
+  console.log("\nTest 12 (Queen Move): ❌ FAILED");
+  console.log(err.message);
+
+}

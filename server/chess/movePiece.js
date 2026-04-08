@@ -4,6 +4,7 @@ const validatePawnMove = require("./validatePawnMove");
 const validateKnightMove = require("./validateKnightMove");
 const validateRookMove = require("./validateRookMove");
 const validateBishopMove = require("./validateBishopMove");
+const validateQueenMove = require("./validateQueenMove");
 
 function movePiece(fen, fromRow, fromCol, toRow, toCol) {
   const board = parseFEN(fen);
@@ -31,6 +32,11 @@ function movePiece(fen, fromRow, fromCol, toRow, toCol) {
   if ((piece === "B" || piece === "b")
     && !validateBishopMove(board, fromRow, fromCol, toRow, toCol)) {
     throw new Error("Invalid bishop move");
+  }
+
+  if ((piece === "Q" || piece === "q")
+    && !validateQueenMove(board, fromRow, fromCol, toRow, toCol)) {
+    throw new Error("Invalid queen move");
   }
 
   board[toRow][toCol] = piece;

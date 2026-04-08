@@ -335,3 +335,35 @@ try {
   console.log(err.message);
 
 }
+
+const isKingInCheck = require("./isKingInCheck");
+
+/* ===========================
+   Test 15: King In Check
+=========================== */
+
+try {
+
+  let fen = "4k3/8/8/8/8/8/8/4R3";
+
+  const result = isKingInCheck(
+    fen,
+    "black"
+  );
+
+  if (result) {
+
+    console.log("\nTest 15 (Check Detection): ✅ PASSED");
+
+  } else {
+
+    console.log("\nTest 15 (Check Detection): ❌ FAILED");
+
+  }
+
+} catch (err) {
+
+  console.log("\nTest 15 Error:");
+  console.log(err.message);
+
+}

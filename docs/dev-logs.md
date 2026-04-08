@@ -429,3 +429,33 @@ Ready to implement king movement logic.
 
 All chess piece movement implemented successfully.
 Ready to implement check detection logic.
+
+## Dev Log — King Locator Utility
+
+**Date:** [Today]
+
+### Completed:
+
+- Implemented findKing utility
+- Enabled king position detection
+- Prepared foundation for check detection
+
+### Status:
+
+King detection system operational.
+
+## Dev Log — Check Detection Engine
+
+**Date:** [Today]
+
+### Completed:
+
+- Implemented king position detection
+- Implemented attack detection scanning
+- Implemented check detection logic
+- Verified enemy attack detection
+
+### Status:
+
+Check detection system operational.
+Ready to implement move legality enforcement.

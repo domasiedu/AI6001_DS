@@ -459,3 +459,46 @@ King detection system operational.
 
 Check detection system operational.
 Ready to implement move legality enforcement.
+
+## Dev Log — Move Legality Enforcement
+
+**Date:** [Today]
+
+### Completed:
+
+- Added king safety validation after move simulation
+- Prevented moves that leave own king in check
+- Integrated check detection into move execution
+- Improved overall chess legality enforcement
+
+### Tests Performed:
+
+- Illegal move into check rejection
+- Legal move out of check validation
+
+### Status:
+
+Move legality enforcement operational.
+Engine now prevents illegal self-check moves.
+
+## Dev Log — Checkmate Detection Implementation
+
+**Date:** [Today]
+
+### Completed:
+
+- Implemented full move generation system
+- Implemented checkmate detection logic
+- Evaluated king safety across all possible moves
+- Verified checkmate detection using test positions
+
+### Tests Performed:
+
+- Checkmate detection test case
+- King threat evaluation
+- No-escape move validation
+
+### Status:
+
+Checkmate detection operational.
+Core chess engine logic complete.

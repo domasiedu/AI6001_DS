@@ -6,6 +6,7 @@ const validateRookMove = require("./validateRookMove");
 const validateBishopMove = require("./validateBishopMove");
 const validateQueenMove = require("./validateQueenMove");
 const validateKingMove = require("./validateKingMove");
+const isKingInCheck = require("./isKingInCheck");
 
 function movePiece(fen, fromRow, fromCol, toRow, toCol) {
   const board = parseFEN(fen);
@@ -45,10 +46,18 @@ function movePiece(fen, fromRow, fromCol, toRow, toCol) {
     throw new Error("Invalid king move");
   }
 
+  const color = piece === piece.toUpperCase() ? "white" : "black";
+
   board[toRow][toCol] = piece;
   board[fromRow][fromCol] = null;
 
-  return generateFEN(board);
+  const updatedFEN = generateFEN(board);
+
+  if (isKingInCheck(updatedFEN, color)) {
+    throw new Error("Illegal move: king would remain in check");
+  }
+
+  return updatedFEN;
 }
 
 module.exports = movePiece;

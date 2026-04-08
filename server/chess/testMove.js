@@ -367,3 +367,83 @@ try {
   console.log(err.message);
 
 }
+
+/* ===========================
+   Test 16: Illegal Move Into Check
+=========================== */
+
+try {
+
+  let fen = "4k3/8/8/8/8/8/4r3/4K3";
+
+  movePiece(
+    fen,
+    7, 4,  // white king e1
+    7, 3   // tries to move while still exposed
+  );
+
+  console.log("\nTest 16 (Move Into Check): ❌ SHOULD FAIL");
+
+} catch (err) {
+
+  console.log("\nTest 16 (Move Into Check): ✅ CORRECTLY FAILED");
+  console.log(err.message);
+
+}
+
+
+/* ===========================
+   Test 17: Legal Move Out of Check
+=========================== */
+
+try {
+
+  let fen = "4k3/8/8/8/8/8/4r3/4K3";
+
+  const updated = movePiece(
+    fen,
+    7, 4,  // white king e1
+    6, 4   // king captures/escapes depending on board
+  );
+
+  console.log("\nTest 17 (Move Out of Check): ✅ PASSED");
+  console.log(updated);
+
+} catch (err) {
+
+  console.log("\nTest 17 (Move Out of Check): ❌ FAILED");
+  console.log(err.message);
+
+}
+
+const isCheckmate = require("./isCheckmate");
+
+/* ===========================
+   Test 18: Checkmate Detection
+=========================== */
+
+try {
+
+  let fen = "7k/6Q1/6K1/8/8/8/8/8";
+
+  const result = isCheckmate(
+    fen,
+    "black"
+  );
+
+  if (result) {
+
+    console.log("\nTest 18 (Checkmate): ✅ PASSED");
+
+  } else {
+
+    console.log("\nTest 18 (Checkmate): ❌ FAILED");
+
+  }
+
+} catch (err) {
+
+  console.log("\nTest 18 Error:");
+  console.log(err.message);
+
+}

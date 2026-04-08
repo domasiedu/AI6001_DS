@@ -166,3 +166,50 @@ Users can now register and securely log in, enabling user-specific game sessions
 
 **Status:**  
 Completed.
+
+## Dev Log — Game API Implementation
+
+**Date:** [Today]
+
+### Completed:
+
+- Implemented Game API routes
+- Added create game endpoint
+- Added load game endpoint
+- Added update game endpoint
+- Added game history endpoint
+- Integrated Game model with MongoDB
+
+### API Endpoints Created:
+
+POST   /api/games  
+GET    /api/games  
+GET    /api/games/:id  
+PUT    /api/games/:id  
+
+### Status:
+
+Game persistence system successfully implemented and tested.
+
+## Dev Log — Game Creation API Testing
+
+**Date:** [Today]
+
+### Completed:
+
+- Tested Game Creation API
+- Verified MongoDB ObjectId validation
+- Fixed userId input format
+- Confirmed database write success
+
+### Issue Encountered:
+
+Received validation error when using username instead of ObjectId.
+
+### Resolution:
+
+Used actual MongoDB user `_id` as `userId`.
+
+### Status:
+
+Game creation API successfully tested.

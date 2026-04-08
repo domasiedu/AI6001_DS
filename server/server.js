@@ -3,6 +3,8 @@ const path = require("path");
 const cors = require("cors");
 const connectDB = require("./db");
 const authRoutes = require("./api/auth");
+const gameRoutes = require("./api/games");
+
 
 console.log("Auth routes loaded:", typeof authRoutes);
 
@@ -20,6 +22,10 @@ app.use(express.json());
 
 // ✅ API routes FIRST
 app.use("/api/auth", authRoutes);
+
+// ✅ Log the game routes to ensure they are loaded
+console.log("Game routes loaded:", typeof gameRoutes);
+app.use("/api/games", gameRoutes);
 
 // ✅ Static files AFTER API routes
 app.use(express.static(clientPath));

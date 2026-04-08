@@ -2,6 +2,8 @@ const parseFEN = require("./boardParser");
 const generateFEN = require("./fenGenerator");
 const validatePawnMove = require("./validatePawnMove");
 const validateKnightMove = require("./validateKnightMove");
+const validateRookMove = require("./validateRookMove");
+const validateBishopMove = require("./validateBishopMove");
 
 function movePiece(fen, fromRow, fromCol, toRow, toCol) {
   const board = parseFEN(fen);
@@ -19,6 +21,16 @@ function movePiece(fen, fromRow, fromCol, toRow, toCol) {
   if ((piece === "N" || piece === "n")
     && !validateKnightMove(fromRow, fromCol, toRow, toCol)) {
     throw new Error("Invalid knight move");
+  }
+
+  if ((piece === "R" || piece === "r")
+    && !validateRookMove(board, fromRow, fromCol, toRow, toCol)) {
+    throw new Error("Invalid rook move");
+  }
+
+  if ((piece === "B" || piece === "b")
+    && !validateBishopMove(board, fromRow, fromCol, toRow, toCol)) {
+    throw new Error("Invalid bishop move");
   }
 
   board[toRow][toCol] = piece;

@@ -343,3 +343,46 @@ Ready to implement knight movement rules.
 
 Knight movement operational.
 Ready to implement rook movement logic.
+
+## Dev Log — Rook Movement Implementation
+
+**Date:** [Today]
+
+### Completed:
+
+- Implemented rook movement validation
+- Added path obstruction detection
+- Prevented rook jumping over pieces
+- Enabled horizontal and vertical movement
+- Verified valid rook movement logic
+
+### Tests Performed:
+
+- Blocked rook movement test
+- Valid rook movement test
+
+### Status:
+
+Rook movement operational.
+Ready to implement bishop movement logic.
+
+## Dev Log — Bishop Movement Implementation
+
+**Date:** [Today]
+
+### Completed:
+
+- Implemented bishop diagonal movement
+- Added diagonal path blocking detection
+- Prevented bishop jumping over pieces
+- Verified valid bishop movement
+
+### Tests Performed:
+
+- Blocked bishop movement test
+- Valid bishop movement test
+
+### Status:
+
+Bishop movement operational.
+Ready to implement queen movement logic.

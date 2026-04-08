@@ -143,3 +143,99 @@ try {
   console.log(err.message);
 
 }
+
+/* ===========================
+   Test 7: Rook Move (Blocked)
+=========================== */
+
+try {
+
+  let fen = getInitialBoard();
+
+  movePiece(
+    fen,
+    7, 0,   // rook at a1
+    5, 0    // blocked by pawn
+  );
+
+  console.log("\nTest 7 (Rook Blocked): ❌ SHOULD FAIL");
+
+} catch (err) {
+
+  console.log("\nTest 7 (Rook Blocked): ✅ CORRECTLY FAILED");
+  console.log(err.message);
+
+}
+
+
+/* ===========================
+   Test 8: Rook Move (Valid)
+=========================== */
+
+try {
+
+  let fen = getInitialBoard();
+
+  // Move pawn out of the way
+  fen = movePiece(fen, 6, 0, 4, 0);
+
+  // Move rook
+  fen = movePiece(fen, 7, 0, 5, 0);
+
+  console.log("\nTest 8 (Rook Move): ✅ PASSED");
+  console.log(fen);
+
+} catch (err) {
+
+  console.log("\nTest 8 (Rook Move): ❌ FAILED");
+  console.log(err.message);
+
+}
+
+/* ===========================
+   Test 9: Bishop Blocked
+=========================== */
+
+try {
+
+  let fen = getInitialBoard();
+
+  movePiece(
+    fen,
+    7, 2,  // bishop at c1
+    5, 4   // blocked by pawn
+  );
+
+  console.log("\nTest 9 (Bishop Blocked): ❌ SHOULD FAIL");
+
+} catch (err) {
+
+  console.log("\nTest 9 (Bishop Blocked): ✅ CORRECTLY FAILED");
+  console.log(err.message);
+
+}
+
+
+/* ===========================
+   Test 10: Bishop Move Valid
+=========================== */
+
+try {
+
+  let fen = getInitialBoard();
+
+  // Move pawn out of bishop path
+  fen = movePiece(fen, 6, 3, 4, 3);
+
+  // Move bishop
+  fen = movePiece(fen, 7, 2, 5, 4);
+
+  console.log("\nTest 10 (Bishop Move): ✅ PASSED");
+  console.log(fen);
+
+} catch (err) {
+
+  console.log("\nTest 10 (Bishop Move): ❌ FAILED");
+  console.log(err.message);
+
+}

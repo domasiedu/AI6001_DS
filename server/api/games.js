@@ -1,4 +1,3 @@
-
 const express = require("express");
 const Game = require("../models/Game");
 const getInitialBoard = require("../chess/initialBoard");
@@ -13,20 +12,21 @@ const router = express.Router();
 router.post("/", async (req, res) => {
   try {
     const { userId } = req.body;
+
     const boardState = getInitialBoard();
 
     const game = new Game({
       user: userId,
       boardState,
       moves: [],
-      turn : "white",
+      turn: "white",
       status: "active",
+      winner: null,
     });
 
     await game.save();
 
     return res.status(201).json(game);
-
   } catch (error) {
     return res.status(500).json({
       message: "Error creating game",
@@ -41,11 +41,9 @@ router.post("/", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    const games = await Game.find()
-      .sort({ createdAt: -1 });
+    const games = await Game.find().sort({ createdAt: -1 });
 
     return res.status(200).json(games);
-
   } catch (error) {
     return res.status(500).json({
       message: "Error fetching games",
@@ -69,7 +67,6 @@ router.get("/:id", async (req, res) => {
     }
 
     return res.status(200).json(game);
-
   } catch (error) {
     return res.status(500).json({
       message: "Error loading game",
@@ -79,38 +76,13 @@ router.get("/:id", async (req, res) => {
 });
 
 /* ===========================
-   UPDATE GAME (SAVE MOVES)
+   BLOCK DIRECT GAME UPDATES
 =========================== */
 
 router.put("/:id", async (req, res) => {
-  try {
-    const { moves, boardState, status, winner } = req.body;
-
-    const game = await Game.findByIdAndUpdate(
-      req.params.id,
-      {
-        moves,
-        boardState,
-        status,
-        winner,
-      },
-      { new: true }
-    );
-
-    if (!game) {
-      return res.status(404).json({
-        message: "Game not found",
-      });
-    }
-
-    return res.status(200).json(game);
-
-  } catch (error) {
-    return res.status(500).json({
-      message: "Error updating game",
-      error: error.message,
-    });
-  }
+  return res.status(403).json({
+    message: "Direct game updates are not allowed. Use /api/games/:id/move instead.",
+  });
 });
 
 /* ===========================
@@ -127,18 +99,13 @@ router.put("/:id/move", async (req, res) => {
       });
     }
 
-    const {
-      fromRow,
-      fromCol,
-      toRow,
-      toCol,
-    } = req.body;
+    const { fromRow, fromCol, toRow, toCol } = req.body;
 
     applyMove(game, fromRow, fromCol, toRow, toCol);
+
     await game.save();
 
     return res.status(200).json(game);
-
   } catch (error) {
     return res.status(500).json({
       message: "Error applying move",

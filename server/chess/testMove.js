@@ -479,3 +479,31 @@ try {
   console.log(err.message);
 
 }
+
+/* ===========================
+   Test 20: Wrong Turn Move
+=========================== */
+
+try {
+
+  let game = {
+    boardState: getInitialBoard(),
+    moves: [],
+    turn: "white",
+    status: "active"
+  };
+
+  applyMove(
+    game,
+    1, 0,   // black pawn
+    2, 0
+  );
+
+  console.log("\nTest 20 (Wrong Turn): ❌ SHOULD FAIL");
+
+} catch (err) {
+
+  console.log("\nTest 20 (Wrong Turn): ✅ CORRECTLY FAILED");
+  console.log(err.message);
+
+}

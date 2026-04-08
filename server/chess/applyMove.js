@@ -2,11 +2,25 @@ const movePiece = require("./movePiece");
 const isKingInCheck = require("./isKingInCheck");
 const isCheckmate = require("./isCheckmate");
 const isStalemate = require("./isStalemate");
+const parseFEN = require("./boardParser");
 
 function applyMove(game, fromRow, fromCol, toRow, toCol) {
   const currentFEN = game.boardState;
   const currentPlayer = game.turn || "white";
   const opponentColor = currentPlayer === "white" ? "black" : "white";
+  const board = parseFEN(currentFEN);
+  const piece = board[fromRow][fromCol];
+
+  if (!piece) {
+    throw new Error("No piece at source square");
+  }
+
+  const pieceColor = piece === piece.toUpperCase() ? "white" : "black";
+
+  if (pieceColor !== currentPlayer) {
+    throw new Error("Invalid move: not your turn");
+  }
+
   const newFEN = movePiece(currentFEN, fromRow, fromCol, toRow, toCol);
 
   if (!Array.isArray(game.moves)) {

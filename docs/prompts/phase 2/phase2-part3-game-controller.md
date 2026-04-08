@@ -96,3 +96,27 @@ applyMove(...)
 5. Return updated game.
 
 Handle errors properly.
+
+# Prompt 3
+
+## Dev Log — Turn Enforcement Implementation
+
+**Date:** [Today]
+
+### Completed:
+
+- Implemented piece ownership validation
+- Prevented moving opponent pieces
+- Enforced alternating player turns
+- Validated move source square existence
+
+### Tests Performed:
+
+- Attempted opponent piece movement
+- Verified move rejection behavior
+- Confirmed correct turn handling
+
+### Status:
+
+Turn enforcement fully operational.
+Game move system now enforces correct player ownership.

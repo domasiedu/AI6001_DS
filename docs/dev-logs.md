@@ -524,3 +524,45 @@ Core chess engine logic complete.
 
 Stalemate detection operational.
 Chess game rule logic fully complete.
+
+## Dev Log — Game Routes Hardening
+
+**Date:** [Today]
+
+### Completed:
+
+- Rewrote `server/api/games.js`
+- Preserved create game route
+- Preserved game history and single game retrieval routes
+- Blocked unsafe direct game updates on `PUT /:id`
+- Enforced `/move` as the only valid state-changing route
+
+### Reason for Change:
+
+Direct updates to `boardState`, `moves`, `status`, and `winner` from the client would bypass chess engine validation and break architectural integrity.
+
+### Status:
+
+Game routes now align with the chess engine architecture.
+
+## Dev Log — Turn Enforcement Implementation
+
+**Date:** [Today]
+
+### Completed:
+
+- Implemented piece ownership validation
+- Prevented moving opponent pieces
+- Enforced alternating player turns
+- Validated move source square existence
+
+### Tests Performed:
+
+- Attempted opponent piece movement
+- Verified move rejection behavior
+- Confirmed correct turn handling
+
+### Status:
+
+Turn enforcement fully operational.
+Game move system now enforces correct player ownership.

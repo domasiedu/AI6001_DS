@@ -1,6 +1,7 @@
 
 const express = require("express");
 const Game = require("../models/Game");
+const getInitialBoard = require("../chess/initialBoard");
 
 const router = express.Router();
 
@@ -10,7 +11,8 @@ const router = express.Router();
 
 router.post("/", async (req, res) => {
   try {
-    const { userId, boardState } = req.body;
+    const { userId } = req.body;
+    const boardState = getInitialBoard();
 
     const game = new Game({
       user: userId,

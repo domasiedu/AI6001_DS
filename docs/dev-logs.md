@@ -502,3 +502,25 @@ Engine now prevents illegal self-check moves.
 
 Checkmate detection operational.
 Core chess engine logic complete.
+
+## Dev Log — Stalemate Detection Implementation
+
+**Date:** [Today]
+
+### Completed:
+
+- Implemented stalemate detection logic
+- Evaluated king safety conditions
+- Checked absence of legal moves
+- Verified stalemate detection using test position
+
+### Tests Performed:
+
+- Stalemate detection scenario
+- King non-check state validation
+- Legal move exhaustion testing
+
+### Status:
+
+Stalemate detection operational.
+Chess game rule logic fully complete.

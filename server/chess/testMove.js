@@ -447,3 +447,35 @@ try {
   console.log(err.message);
 
 }
+
+const isStalemate = require("./isStalemate");
+
+/* ===========================
+   Test 19: Stalemate Detection
+=========================== */
+
+try {
+
+  let fen = "7k/5Q2/6K1/8/8/8/8/8";
+
+  const result = isStalemate(
+    fen,
+    "black"
+  );
+
+  if (result) {
+
+    console.log("\nTest 19 (Stalemate): ✅ PASSED");
+
+  } else {
+
+    console.log("\nTest 19 (Stalemate): ❌ FAILED");
+
+  }
+
+} catch (err) {
+
+  console.log("\nTest 19 Error:");
+  console.log(err.message);
+
+}

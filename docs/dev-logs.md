@@ -1,71 +1,71 @@
 # Dev Logs
 ---
-I refactored the AI layer into a dedicated server/ai module 
+I refactored the AI layer into a dedicated server/ai module
 to improve separation of concerns and align with backend architecture.
 
-## Phase 1 — Part 2: Express Server Setup
+## Phase 1 - Part 2: Express Server Setup
 
-**Objective:**  
+**Objective:**
 Configure a Node.js Express server to serve the frontend files.
 
-**Summary:**  
+**Summary:**
 Initialized a backend server using Express to handle HTTP requests and deliver static frontend pages.
 
-**Implementation Details:**  
+**Implementation Details:**
 - Installed Express, CORS, and environment configuration tools.
 - Configured static serving from the client directory.
 - Implemented root routing to load index.html.
 - Started server on port 3000.
 
-**Outcome:**  
+**Outcome:**
 Frontend pages were successfully served through the backend, confirming correct integration between server and client layers.
 
-**Status:**  
+**Status:**
 Completed.
 
-## Phase 1 — Part 3: MongoDB Setup
+## Phase 1 - Part 3: MongoDB Setup
 
-**Objective:**  
+**Objective:**
 Establish a connection between the backend server and MongoDB.
 
-**Summary:**  
+**Summary:**
 Configured MongoDB integration using Mongoose to enable persistent storage of user accounts and gameplay data.
 
-**Implementation Details:**  
+**Implementation Details:**
 - Installed Mongoose dependency.
 - Created database connection module (`db.js`).
 - Loaded environment variables from `.env`.
 - Implemented connection logic with error handling.
 - Integrated database connection into server startup process.
 
-**Outcome:**  
+**Outcome:**
 MongoDB connection was successfully established, enabling future implementation of authentication, game storage, and replay functionality.
 
-**Status:**  
+**Status:**
 Completed.
 
-## Phase 1 — Part 4: User Model Creation
+## Phase 1 - Part 4: User Model Creation
 
-**Objective:**  
+**Objective:**
 Define a database schema for storing user account information.
 
-**Summary:**  
+**Summary:**
 Created a MongoDB User model to store authentication credentials and account metadata.
 
-**Implementation Details:**  
+**Implementation Details:**
 - Defined User schema using Mongoose.
 - Added required validation fields.
 - Enforced uniqueness for username and email.
 - Added timestamp for account creation.
 - Exported User model for reuse across authentication routes.
 
-**Outcome:**  
+**Outcome:**
 User data can now be stored securely in MongoDB, enabling future implementation of authentication and user-specific features.
 
-**Status:**  
+**Status:**
 Completed.
 
-# Phase 1 — Part 5  
+# Phase 1 - Part 5
 ## Create Game Model
 
 **Objective**
@@ -78,7 +78,7 @@ server/models/Game.js
 
 ---
 
-# TASK 1 — Import Dependencies
+# TASK 1 - Import Dependencies
 
 Import:
 
@@ -86,7 +86,7 @@ mongoose
 
 ---
 
-# TASK 2 — Create Game Schema
+# TASK 2 - Create Game Schema
 
 Define the following fields:
 
@@ -118,7 +118,7 @@ createdAt:
 
 ---
 
-# TASK 3 — Create Game Model
+# TASK 3 - Create Game Model
 
 Use:
 
@@ -130,7 +130,7 @@ Game
 
 ---
 
-# TASK 4 — Export Model
+# TASK 4 - Export Model
 
 Export:
 
@@ -144,15 +144,15 @@ Game model created.
 
 Database ready to store chess matches.
 
-## Phase 1 — Part 6: Authentication API
+## Phase 1 - Part 6: Authentication API
 
-**Objective:**  
+**Objective:**
 Implement secure user authentication functionality.
 
-**Summary:**  
+**Summary:**
 Developed authentication routes to allow user registration and login.
 
-**Implementation Details:**  
+**Implementation Details:**
 - Installed bcryptjs for password hashing.
 - Installed jsonwebtoken for authentication tokens.
 - Implemented user registration endpoint.
@@ -161,15 +161,15 @@ Developed authentication routes to allow user registration and login.
 - Generated authentication tokens using JWT.
 - Integrated authentication routes into the main server.
 
-**Outcome:**  
+**Outcome:**
 Users can now register and securely log in, enabling user-specific game sessions.
 
-**Status:**  
+**Status:**
 Completed.
 
-## Dev Log — Game API Implementation
+## Dev Log - Game API Implementation
 
-**Date:** [Today]
+**Date:** 2026-04-08
 
 ### Completed:
 
@@ -182,18 +182,18 @@ Completed.
 
 ### API Endpoints Created:
 
-POST   /api/games  
-GET    /api/games  
-GET    /api/games/:id  
-PUT    /api/games/:id  
+POST   /api/games
+GET    /api/games
+GET    /api/games/:id
+PUT    /api/games/:id
 
 ### Status:
 
 Game persistence system successfully implemented and tested.
 
-## Dev Log — Game Creation API Testing
+## Dev Log - Game Creation API Testing
 
-**Date:** [Today]
+**Date:** 2026-04-08
 
 ### Completed:
 
@@ -214,7 +214,7 @@ Used actual MongoDB user `_id` as `userId`.
 
 Game creation API successfully tested.
 
-## Dev Log — Board Parser Implementation
+## Dev Log - Board Parser Implementation
 
 **Date:** [Today]
 
@@ -229,7 +229,7 @@ Game creation API successfully tested.
 
 Board parsing utility successfully implemented.
 
-## Dev Log — FEN Generator Implementation
+## Dev Log - FEN Generator Implementation
 
 **Date:** [Today]
 
@@ -244,14 +244,14 @@ Board parsing utility successfully implemented.
 
 FEN generator utility successfully implemented.
 
-## Dev Log — Initial Move Engine Test
+## Dev Log - Initial Move Engine Test
 
-**Date:** [Today]
+**Date:** 2026-04-08
 
 ### Completed:
 
 - Created test script for piece movement
-- Tested pawn movement (e2 → e4)
+- Tested pawn movement (e2 -> e4)
 - Verified FEN parsing accuracy
 - Verified FEN regeneration accuracy
 - Confirmed board state update
@@ -264,3 +264,37 @@ Move engine successfully updates board state.
 
 Basic piece movement operational.
 Ready to implement movement validation rules.
+
+## Dev Log — Pawn Movement Validation (Phase 1)
+
+**Date:** 2026-04-08
+
+### Completed:
+
+- Implemented pawn movement validation logic
+- Supported single-square pawn movement
+- Supported double-square initial pawn movement
+- Prevented pawn movement through occupied squares
+- Implemented direction-based pawn logic
+
+### Status:
+
+Pawn forward movement validation operational.
+Capture logic to be implemented next.
+
+## Dev Log — Pawn Movement Testing
+
+**Date:** [Today]
+
+### Completed:
+
+- Updated testMove.js to include structured tests
+- Implemented try/catch error detection
+- Verified pawn forward movement
+- Verified pawn double movement
+- Confirmed illegal pawn move rejection
+
+### Status:
+
+Pawn movement validation confirmed working.
+Ready to implement pawn capture logic.

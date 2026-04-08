@@ -6,17 +6,26 @@ const gameSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
-  moves: {
-    type: Array,
-    default: [],
-  },
+ moves: [
+  {
+    fromRow: Number,
+    fromCol: Number,
+    toRow: Number,
+    toCol: Number,
+  }
+],
   boardState: {
     type: String,
     required: true,
   },
+  turn: {
+  type: String,
+  enum: ["white", "black"],
+  default: "white"
+},
   status: {
     type: String,
-    enum: ["active", "finished"],
+    enum: ["active", "checkmate", "stalemate"],
     default: "active",
   },
   winner: {

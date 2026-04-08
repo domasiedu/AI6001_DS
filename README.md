@@ -14,9 +14,6 @@ Link to be shared
 
 ---
 
-# Project Videos
-
-Link to be shared
 
 ## Project Presentation
 

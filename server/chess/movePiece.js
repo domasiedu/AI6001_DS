@@ -41,9 +41,15 @@ function movePiece(fen, fromRow, fromCol, toRow, toCol) {
     throw new Error("Invalid queen move");
   }
 
-  if ((piece === "K" || piece === "k")
-    && !validateKingMove(fromRow, fromCol, toRow, toCol)) {
-    throw new Error("Invalid king move");
+  if (piece === "K" || piece === "k") {
+    const rowDiff = toRow - fromRow;
+    const colDiff = toCol - fromCol;
+    const isNormalKingMove = validateKingMove(fromRow, fromCol, toRow, toCol);
+    const isCastlingMove = rowDiff === 0 && Math.abs(colDiff) === 2;
+
+    if (!isNormalKingMove && !isCastlingMove) {
+      throw new Error("Invalid king move");
+    }
   }
 
   const color = piece === piece.toUpperCase() ? "white" : "black";

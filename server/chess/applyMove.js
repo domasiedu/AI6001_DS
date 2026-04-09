@@ -21,29 +21,85 @@ function applyMove(game, fromRow, fromCol, toRow, toCol) {
     throw new Error("Invalid move: not your turn");
   }
 
+  const movingPiece = board[fromRow][fromCol];
+
+  if (!game.castlingRights) {
+    game.castlingRights = {
+      whiteKingMoved: false,
+      whiteRookKingsideMoved: false,
+      whiteRookQueensideMoved: false,
+      blackKingMoved: false,
+      blackRookKingsideMoved: false,
+      blackRookQueensideMoved: false,
+    };
+  }
+
+  if (movingPiece === "K") {
+    game.castlingRights.whiteKingMoved = true;
+  }
+
+  if (movingPiece === "k") {
+    game.castlingRights.blackKingMoved = true;
+  }
+
+  if (movingPiece === "R" && fromRow === 7 && fromCol === 0) {
+    game.castlingRights.whiteRookQueensideMoved = true;
+  }
+
+  if (movingPiece === "R" && fromRow === 7 && fromCol === 7) {
+    game.castlingRights.whiteRookKingsideMoved = true;
+  }
+
+  if (movingPiece === "r" && fromRow === 0 && fromCol === 0) {
+    game.castlingRights.blackRookQueensideMoved = true;
+  }
+
+  if (movingPiece === "r" && fromRow === 0 && fromCol === 7) {
+    game.castlingRights.blackRookKingsideMoved = true;
+  }
+
   const newFEN = movePiece(currentFEN, fromRow, fromCol, toRow, toCol);
 
   if (!Array.isArray(game.moves)) {
     game.moves = [];
   }
 
-  const movingPiece = board[fromRow][fromCol];
   const capturedPiece = board[toRow][toCol] || null;
 
-game.moves.push({
-  fromRow,
-  fromCol,
-  toRow,
-  toCol,
-  piece: movingPiece,
-  captured: capturedPiece,
-  timestamp: new Date(),
-});
+  const generateNotation = require("./notation");
+
+  let notation = generateNotation(
+    fromRow,
+    fromCol,
+    toRow,
+    toCol,
+    movingPiece,
+    capturedPiece
+  );
 
   game.boardState = newFEN;
   game.turn = opponentColor;
 
   const opponentInCheck = isKingInCheck(newFEN, opponentColor);
+
+  if (opponentInCheck) {
+    if (isCheckmate(newFEN, opponentColor)) {
+      notation += "#";
+    } else {
+      notation += "+";
+    }
+  }
+
+  game.moves.push({
+    fromRow,
+    fromCol,
+    toRow,
+    toCol,
+    piece: movingPiece,
+    captured: capturedPiece,
+    notation,
+    timestamp: new Date(),
+  });
 
   if (opponentInCheck && isCheckmate(newFEN, opponentColor)) {
     game.status = "checkmate";

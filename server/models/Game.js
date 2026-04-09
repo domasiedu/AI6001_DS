@@ -14,6 +14,7 @@ const gameSchema = new mongoose.Schema({
     toCol: Number,
     piece: String,
     captured: String,
+    notation: String,
     timestamp: Date,
   }
 ],
@@ -34,6 +35,32 @@ const gameSchema = new mongoose.Schema({
   winner: {
     type: String,
     default: null,
+  },
+  castlingRights: {
+    whiteKingMoved: {
+      type: Boolean,
+      default: false
+    },
+    whiteRookKingsideMoved: {
+      type: Boolean,
+      default: false
+    },
+    whiteRookQueensideMoved: {
+      type: Boolean,
+      default: false
+    },
+    blackKingMoved: {
+      type: Boolean,
+      default: false
+    },
+    blackRookKingsideMoved: {
+      type: Boolean,
+      default: false
+    },
+    blackRookQueensideMoved: {
+      type: Boolean,
+      default: false
+    }
   },
   createdAt: {
     type: Date,

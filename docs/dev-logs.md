@@ -566,3 +566,44 @@ Game routes now align with the chess engine architecture.
 
 Turn enforcement fully operational.
 Game move system now enforces correct player ownership.
+
+## Dev Log — Check and Checkmate Notation
+
+**Date:** [Today]
+
+### Completed:
+
+- Modified applyMove.js to append "+" when opponent king is in check
+- Added "#" when opponent is in checkmate
+- Ensured notation stored correctly in move history
+- Verified compatibility with existing move logic
+
+### Tests Performed:
+
+- Generated check position
+- Verified "+" symbol added
+- Verified notation stored in moves array
+
+### Status:
+
+Check and checkmate notation fully operational.
+
+## Dev Log — Castling Rights Tracking
+
+**Date:** [Today]
+
+### Completed:
+
+- Added castling rights tracking to Game schema
+- Initialized castling flags during game creation
+- Enabled state persistence for king and rook movement
+
+### Tests Performed:
+
+- Created new game
+- Verified castlingRights initialization
+
+### Status:
+
+Castling state tracking initialized.
+Ready to implement castling validation logic.

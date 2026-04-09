@@ -22,6 +22,15 @@ router.post("/", async (req, res) => {
       turn: "white",
       status: "active",
       winner: null,
+// Initialize castling rights
+      castlingRights: {
+        whiteKingMoved: false,
+        whiteRookKingsideMoved: false,
+        whiteRookQueensideMoved: false,
+        blackKingMoved: false,
+        blackRookKingsideMoved: false,
+        blackRookQueensideMoved: false,
+      },
     });
 
     await game.save();

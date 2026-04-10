@@ -273,6 +273,16 @@ function applyMove(game, fromRow, fromCol, toRow, toCol) {
   game.boardState = newFEN;
   game.turn = opponentColor;
 
+  if (!Array.isArray(game.history)) {
+    game.history = [];
+  }
+
+  if (game.history.length === 0) {
+    game.history.push(currentFEN);
+  }
+
+  game.history.push(newFEN);
+
   const opponent =
     game.turn;
 

@@ -54,6 +54,14 @@ function toSquareName(row, col) {
 }
 
 async function handleSquareClick(row, col) {
+  if (
+    document
+      .getElementById("game-over-banner")
+      .textContent !== ""
+  ) {
+    return;
+  }
+
   const files = ["a", "b", "c", "d", "e", "f", "g", "h"];
   const squareName = `${files[col]}${8 - row}`;
   console.log("Clicked square:", squareName, "row:", row, "col:", col);
@@ -204,6 +212,20 @@ function clearCheckHighlight() {
         "king-in-check"
       );
     });
+}
+
+function showGameOverBanner(message) {
+  const banner =
+    document.getElementById(
+      "game-over-banner"
+    );
+
+  banner.textContent =
+    message;
+
+  banner.classList.remove(
+    "hidden"
+  );
 }
 
 function getPieceFromBoard(row, col) {
@@ -392,6 +414,20 @@ async function sendMoveToBackend(
     currentTurn = data.turn;
 
     if (data.status === "finished") {
+      if (data.winner === "white") {
+        showGameOverBanner(
+          "CHECKMATE — WHITE WINS"
+        );
+      } else if (data.winner === "black") {
+        showGameOverBanner(
+          "CHECKMATE — BLACK WINS"
+        );
+      } else {
+        showGameOverBanner(
+          "STALEMATE — DRAW"
+        );
+      }
+
       let message = "";
 
       if (data.winner === "draw") {
@@ -488,3 +524,71 @@ async function createNewGame() {
 }
 
 createNewGame();
+
+document
+  .getElementById("restart-game-btn")
+  .addEventListener("click", async () => {
+    selectedSquare = null;
+    clearHighlights();
+    clearLastMoveHighlight();
+    clearCheckHighlight();
+
+    const banner =
+      document.getElementById("game-over-banner");
+    banner.textContent = "";
+    banner.classList.add("hidden");
+
+    await createNewGame();
+
+    const history =
+      document.getElementById("move-history");
+    if (history) history.innerHTML = "";
+
+    const whiteCaptures =
+      document.getElementById("white-captures");
+    if (whiteCaptures) whiteCaptures.innerHTML = "";
+
+    const blackCaptures =
+      document.getElementById("black-captures");
+    if (blackCaptures) blackCaptures.innerHTML = "";
+  });
+
+document
+  .getElementById("undo-btn")
+  .addEventListener("click", async () => {
+    try {
+      const response =
+        await fetch(
+          `http://localhost:3000/api/games/${gameId}/undo`,
+          { method: "PUT" }
+        );
+
+      const data =
+        await response.json();
+
+      currentFEN =
+        data.boardState;
+
+      currentTurn =
+        data.turn;
+
+      clearBoard();
+
+      renderBoardFromFEN(
+        currentFEN
+      );
+
+      updateMoveHistory(
+        data.moves
+      );
+
+      updateCapturedPieces(
+        data.moves
+      );
+    } catch (error) {
+      console.error(
+        "Undo failed:",
+        error
+      );
+    }
+  });

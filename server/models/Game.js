@@ -25,6 +25,10 @@ const gameSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  history: {
+    type: [String],
+    default: []
+  },
   turn: {
   type: String,
   enum: ["white", "black"],

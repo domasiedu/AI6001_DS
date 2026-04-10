@@ -30,6 +30,12 @@ function isKingInCheck(board, color) {
     }
   }
 
+  console.log(
+    "KING FOUND:",
+    kingRow,
+    kingCol
+  );
+
   const opponent =
     color === "white"
       ? "black"

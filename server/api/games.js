@@ -6,6 +6,8 @@ const boardParser = require("../chess/boardParser");
 const movePiece = require("../chess/movePiece");
 const getLegalMoves =
   require("../chess/getLegalMoves");
+const undoMove =
+  require("../controllers/undoMove");
 const router = express.Router();
 
 /* ===========================
@@ -21,6 +23,7 @@ router.post("/", async (req, res) => {
     const game = new Game({
       user: userId,
       boardState,
+      history: [boardState],
       moves: [],
       turn: "white",
       status: "active",
@@ -180,6 +183,8 @@ router.put("/:id", async (req, res) => {
     message: "Direct game updates are not allowed. Use /api/games/:id/move instead.",
   });
 });
+
+router.put("/:gameId/undo", undoMove);
 
 /* ===========================
    APPLY MOVE

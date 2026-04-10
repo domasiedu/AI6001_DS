@@ -1,8 +1,11 @@
-function getPawnMoves(board, row, col) {
+function getPawnMoves(
+  board,
+  row,
+  col,
+  piece,
+  enPassantTarget = null
+) {
   const moves = [];
-
-  const piece =
-    board[row][col];
 
   const isWhite =
     piece === piece.toUpperCase();
@@ -65,6 +68,49 @@ function getPawnMoves(board, row, col) {
       row: nextRow,
       col: col + 1
     });
+  }
+
+  // En passant capture
+  if (enPassantTarget) {
+    const direction =
+      piece === piece.toUpperCase()
+        ? -1
+        : 1;
+
+    const targetRow =
+      row + direction;
+
+    const targetColLeft =
+      col - 1;
+
+    const targetColRight =
+      col + 1;
+
+    if (
+      targetRow === enPassantTarget.row
+    ) {
+      if (
+        targetColLeft ===
+        enPassantTarget.col
+      ) {
+        moves.push({
+          row: targetRow,
+          col: targetColLeft,
+          enPassant: true
+        });
+      }
+
+      if (
+        targetColRight ===
+        enPassantTarget.col
+      ) {
+        moves.push({
+          row: targetRow,
+          col: targetColRight,
+          enPassant: true
+        });
+      }
+    }
   }
 
   return moves;

@@ -153,6 +153,33 @@ function applyMove(game, fromRow, fromCol, toRow, toCol) {
   let newFEN = movePiece(latestBoardFEN, fromRow, fromCol, toRow, toCol);
   let promoted = false;
   const updatedBoard = parseFEN(newFEN);
+
+  // Handle en passant capture
+  if (
+    game.enPassantTarget &&
+    movingPiece.toLowerCase() === "p"
+  ) {
+    if (
+      toRow === game.enPassantTarget.row &&
+      toCol === game.enPassantTarget.col
+    ) {
+      const direction =
+        movingPiece === "P"
+          ? 1
+          : -1;
+
+      const capturedPawnRow =
+        toRow + direction;
+
+      updatedBoard[
+        capturedPawnRow
+      ][toCol] = null;
+
+      newFEN =
+        generateFEN(updatedBoard);
+    }
+  }
+
   const capturedPiece =
     updatedBoard[toRow][toCol] !== movingPiece
       ? updatedBoard[toRow][toCol]
@@ -224,6 +251,25 @@ function applyMove(game, fromRow, fromCol, toRow, toCol) {
     if (movingPiece === "p") {
       notation += "=q";
     }
+  }
+
+  // Reset en passant target
+  game.enPassantTarget = null;
+
+  // Detect double pawn move
+  if (
+    (movingPiece === "P" &&
+     fromRow === 6 &&
+     toRow === 4)
+    ||
+    (movingPiece === "p" &&
+     fromRow === 1 &&
+     toRow === 3)
+  ) {
+    game.enPassantTarget = {
+      row: (fromRow + toRow) / 2,
+      col: fromCol
+    };
   }
 
   game.boardState = newFEN;

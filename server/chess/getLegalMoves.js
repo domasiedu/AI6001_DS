@@ -19,7 +19,8 @@ function getPieceMoves(
   board,
   row,
   col,
-  piece
+  piece,
+  options = {}
 ) {
   const pieceType =
     piece.toLowerCase();
@@ -30,7 +31,8 @@ function getPieceMoves(
         board,
         row,
         col,
-        piece
+        piece,
+        options.enPassantTarget || null
       );
 
     case "n":
@@ -96,7 +98,8 @@ function getLegalMoves(
       board,
       row,
       col,
-      piece
+      piece,
+      options
     );
 
   if (options.skipKingSafety) {

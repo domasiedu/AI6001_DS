@@ -136,7 +136,10 @@ router.get("/:id/legal-moves", async (req, res) => {
         board,
         rowNum,
         colNum,
-        piece
+        piece,
+        {
+          enPassantTarget: game.enPassantTarget
+        }
       );
 
     return res.status(200).json({

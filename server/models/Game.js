@@ -39,6 +39,10 @@ const gameSchema = new mongoose.Schema({
     type: String,
     default: null,
   },
+  enPassantTarget: {
+    row: Number,
+    col: Number
+  },
   castlingRights: {
     whiteKingMoved: {
       type: Boolean,

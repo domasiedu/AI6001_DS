@@ -134,6 +134,78 @@ function highlightLegalMoves(moves) {
   });
 }
 
+function highlightLastMove(move) {
+  if (!move) return;
+
+  const fromSquare =
+    document.querySelector(
+      `[data-row="${move.fromRow}"][data-col="${move.fromCol}"]`
+    );
+
+  const toSquare =
+    document.querySelector(
+      `[data-row="${move.toRow}"][data-col="${move.toCol}"]`
+    );
+
+  if (fromSquare)
+    fromSquare.classList.add("last-move");
+
+  if (toSquare)
+    toSquare.classList.add("last-move");
+}
+
+function clearLastMoveHighlight() {
+  const squares =
+    document.querySelectorAll(".last-move");
+
+  squares.forEach((square) => {
+    square.classList.remove("last-move");
+  });
+}
+
+function highlightKingInCheck(color) {
+  const rows =
+    currentFEN.split("/");
+
+  for (let row = 0; row < 8; row++) {
+    let col = 0;
+
+    for (const char of rows[row]) {
+      if (!isNaN(char)) {
+        col += Number(char);
+      } else {
+        if (
+          (color === "white" && char === "K") ||
+          (color === "black" && char === "k")
+        ) {
+          const kingSquare =
+            document.querySelector(
+              `[data-row="${row}"][data-col="${col}"]`
+            );
+
+          if (kingSquare) {
+            kingSquare.classList.add(
+              "king-in-check"
+            );
+          }
+        }
+
+        col++;
+      }
+    }
+  }
+}
+
+function clearCheckHighlight() {
+  document
+    .querySelectorAll(".king-in-check")
+    .forEach((square) => {
+      square.classList.remove(
+        "king-in-check"
+      );
+    });
+}
+
 function getPieceFromBoard(row, col) {
   const rows = currentFEN.split("/");
   let currentCol = 0;
@@ -215,6 +287,43 @@ function updateMoveHistory(moves) {
   });
 }
 
+function updateCapturedPieces(moves) {
+  const whiteBox =
+    document.getElementById(
+      "white-captures"
+    );
+
+  const blackBox =
+    document.getElementById(
+      "black-captures"
+    );
+
+  whiteBox.innerHTML = "";
+  blackBox.innerHTML = "";
+
+  moves.forEach((move) => {
+    if (move.captured) {
+      const pieceSymbol =
+        pieces[move.captured];
+
+      const span =
+        document.createElement("span");
+
+      span.textContent =
+        pieceSymbol;
+
+      if (
+        move.captured ===
+        move.captured.toLowerCase()
+      ) {
+        whiteBox.appendChild(span);
+      } else {
+        blackBox.appendChild(span);
+      }
+    }
+  });
+}
+
 async function fetchLegalMoves(row, col) {
   try {
     const response =
@@ -224,6 +333,7 @@ async function fetchLegalMoves(row, col) {
 
     const data =
       await response.json();
+    console.log("Legal moves response:", data);
 
     console.log(
       "Legal moves received:",
@@ -304,7 +414,30 @@ async function sendMoveToBackend(
       currentFEN
     );
 
+    clearCheckHighlight();
+
+    if (data.check) {
+      highlightKingInCheck(
+        data.turn
+      );
+    }
+
+    clearLastMoveHighlight();
+
+    const lastMove =
+      data.moves[
+        data.moves.length - 1
+      ];
+
+    highlightLastMove(
+      lastMove
+    );
+
     updateMoveHistory(
+      data.moves
+    );
+
+    updateCapturedPieces(
       data.moves
     );
   } catch (error) {

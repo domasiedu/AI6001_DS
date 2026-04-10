@@ -150,6 +150,9 @@ function applyMove(game, fromRow, fromCol, toRow, toCol) {
   const latestBoardFEN =
     generateFEN(board);
 
+  const capturedPiece =
+    board[toRow][toCol] || null;
+
   let newFEN = movePiece(latestBoardFEN, fromRow, fromCol, toRow, toCol);
   let promoted = false;
   const updatedBoard = parseFEN(newFEN);
@@ -179,11 +182,6 @@ function applyMove(game, fromRow, fromCol, toRow, toCol) {
         generateFEN(updatedBoard);
     }
   }
-
-  const capturedPiece =
-    updatedBoard[toRow][toCol] !== movingPiece
-      ? updatedBoard[toRow][toCol]
-      : null;
 
   if (movingPiece === "P" && toRow === 0) {
     updatedBoard[toRow][toCol] = "Q";
@@ -275,7 +273,26 @@ function applyMove(game, fromRow, fromCol, toRow, toCol) {
   game.boardState = newFEN;
   game.turn = opponentColor;
 
-  const opponentInCheck = isKingInCheck(newFEN, opponentColor);
+  const opponent =
+    game.turn;
+
+  const boardArray =
+    parseFEN(newFEN);
+
+  const check =
+    isKingInCheck(
+      boardArray,
+      opponent
+    );
+
+  game.check = check;
+
+  console.log(
+    "CHECK STATUS:",
+    check
+  );
+
+  const opponentInCheck = check;
 
   console.log(
     "Opponent color:",
@@ -308,7 +325,7 @@ function applyMove(game, fromRow, fromCol, toRow, toCol) {
     fromCol,
     toRow,
     toCol,
-    piece: movingPiece,
+    piece,
     captured: capturedPiece,
     notation,
     timestamp: new Date(),

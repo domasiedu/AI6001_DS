@@ -6,7 +6,6 @@ const boardParser = require("../chess/boardParser");
 const movePiece = require("../chess/movePiece");
 const getLegalMoves =
   require("../chess/getLegalMoves");
-
 const router = express.Router();
 
 /* ===========================
@@ -202,7 +201,14 @@ router.put("/:id/move", async (req, res) => {
 
     await game.save();
 
-    return res.status(200).json(game);
+    return res.status(200).json({
+      boardState: game.boardState,
+      turn: game.turn,
+      moves: game.moves,
+      status: game.status,
+      winner: game.winner,
+      check: game.check
+    });
   } catch (error) {
     return res.status(500).json({
       message: "Error applying move",

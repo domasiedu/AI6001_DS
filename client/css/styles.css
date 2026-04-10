@@ -57,9 +57,27 @@
   background-color: rgba(0, 255, 0, 0.4);
 }
 
+.last-move {
+  background-color: rgba(255, 255, 0, 0.5);
+}
+
+.king-in-check {
+  background-color: rgba(255, 0, 0, 0.6);
+}
+
 #history-panel {
   width: 200px;
   margin-left: 20px;
+}
+
+#captured-container {
+  margin-bottom: 10px;
+}
+
+#white-captures,
+#black-captures {
+  min-height: 30px;
+  font-size: 20px;
 }
 
 #move-history {

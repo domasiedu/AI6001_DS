@@ -13,7 +13,10 @@ const gameSchema = new mongoose.Schema({
     toRow: Number,
     toCol: Number,
     piece: String,
-    captured: String,
+    captured: {
+      type: String,
+      default: null
+    },
     notation: String,
     timestamp: Date,
   }

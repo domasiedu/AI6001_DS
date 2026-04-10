@@ -57,6 +57,7 @@ function getPieceMoves(
         piece
       );
 
+    case "Q":
     case "q":
       return getQueenMoves(
         board,
@@ -85,6 +86,11 @@ function getLegalMoves(
   piece,
   options = {}
 ) {
+  console.log(
+    "Piece at e7:",
+    board[1][4]
+  );
+
   const moves =
     getPieceMoves(
       board,
@@ -96,6 +102,8 @@ function getLegalMoves(
   if (options.skipKingSafety) {
     return moves;
   }
+
+  return moves;
 
   const safeMoves = [];
 

@@ -33,6 +33,12 @@ for (let row = 0; row < 8; row++) {
 
     square.dataset.row = row;
     square.dataset.col = col;
+
+    const label = document.createElement("span");
+    label.classList.add("coord-label");
+    label.textContent = toSquareName(row, col);
+    square.appendChild(label);
+
     square.addEventListener("click", () => {
       handleSquareClick(row, col);
     });
@@ -41,7 +47,17 @@ for (let row = 0; row < 8; row++) {
   }
 }
 
+function toSquareName(row, col) {
+  const files = ["a", "b", "c", "d", "e", "f", "g", "h"];
+
+  return `${files[col]}${8 - row}`;
+}
+
 async function handleSquareClick(row, col) {
+  const files = ["a", "b", "c", "d", "e", "f", "g", "h"];
+  const squareName = `${files[col]}${8 - row}`;
+  console.log("Clicked square:", squareName, "row:", row, "col:", col);
+
   const piece =
     getPieceFromBoard(row, col);
 
@@ -86,7 +102,14 @@ function clearBoard() {
   const squares = document.querySelectorAll(".square");
 
   for (const square of squares) {
+    const label =
+      square.querySelector(".coord-label");
+
     square.textContent = "";
+
+    if (label) {
+      square.appendChild(label);
+    }
   }
 }
 
@@ -158,8 +181,14 @@ function renderBoardFromFEN(fen) {
           document.querySelector(
             `[data-row="${row}"][data-col="${col}"]`
           );
+        const label =
+          square.querySelector(".coord-label");
 
         square.textContent = pieces[char];
+
+        if (label) {
+          square.appendChild(label);
+        }
 
         col++;
       }

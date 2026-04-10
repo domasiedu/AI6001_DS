@@ -106,6 +106,16 @@ router.get("/:id/legal-moves", async (req, res) => {
             game.boardState
           );
 
+    console.log(
+      "Stored FEN:",
+      game.boardState
+    );
+
+    console.log(
+      "Square e7:",
+      board[1][4]
+    );
+
     if (!board[rowNum]) {
       return res.status(400).json({
         message: "Invalid board access"

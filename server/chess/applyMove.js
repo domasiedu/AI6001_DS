@@ -147,9 +147,16 @@ function applyMove(game, fromRow, fromCol, toRow, toCol) {
     }
   }
 
-  let newFEN = movePiece(boardStateForMove, fromRow, fromCol, toRow, toCol);
+  const latestBoardFEN =
+    generateFEN(board);
+
+  let newFEN = movePiece(latestBoardFEN, fromRow, fromCol, toRow, toCol);
   let promoted = false;
   const updatedBoard = parseFEN(newFEN);
+  const capturedPiece =
+    updatedBoard[toRow][toCol] !== movingPiece
+      ? updatedBoard[toRow][toCol]
+      : null;
 
   if (movingPiece === "P" && toRow === 0) {
     updatedBoard[toRow][toCol] = "Q";
@@ -169,11 +176,22 @@ function applyMove(game, fromRow, fromCol, toRow, toCol) {
     throw new Error("Illegal move: King would be in check");
   }
 
+  const checkmate =
+    isCheckmate(
+      updatedBoard,
+      opponentColor
+    );
+
+  if (checkmate) {
+    console.log(
+      "CHECKMATE:",
+      opponentColor
+    );
+  }
+
   if (!Array.isArray(game.moves)) {
     game.moves = [];
   }
-
-  const capturedPiece = board[toRow][toCol] || null;
 
   const generateNotation = require("./notation");
 
@@ -213,8 +231,26 @@ function applyMove(game, fromRow, fromCol, toRow, toCol) {
 
   const opponentInCheck = isKingInCheck(newFEN, opponentColor);
 
+  console.log(
+    "Opponent color:",
+    opponentColor
+  );
+
+  console.log(
+    "Opponent in check:",
+    opponentInCheck
+  );
+
   if (opponentInCheck) {
-    if (isCheckmate(newFEN, opponentColor)) {
+    const checkmateResult =
+      isCheckmate(newFEN, opponentColor);
+
+    console.log(
+      "Checkmate result:",
+      checkmateResult
+    );
+
+    if (checkmateResult) {
       notation += "#";
     } else {
       notation += "+";

@@ -8,6 +8,7 @@
 }
 
 .square {
+  position: relative;
   width: 70px;
   height: 70px;
 
@@ -20,6 +21,15 @@
 
   cursor: pointer;
   user-select: none;
+}
+
+.coord-label {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  font-size: 10px;
+  opacity: 0.7;
+  pointer-events: none;
 }
 
 .square:hover {

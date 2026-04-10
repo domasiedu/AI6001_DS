@@ -1,3 +1,9 @@
+#game-area {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
 #board {
   display: grid;
   grid-template-columns: repeat(8, 70px);
@@ -49,4 +55,15 @@
 }
 .legal {
   background-color: rgba(0, 255, 0, 0.4);
+}
+
+#history-panel {
+  width: 200px;
+  margin-left: 20px;
+}
+
+#move-history {
+  font-size: 14px;
+  max-height: 400px;
+  overflow-y: auto;
 }

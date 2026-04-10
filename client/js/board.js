@@ -196,6 +196,25 @@ function renderBoardFromFEN(fen) {
   }
 }
 
+function updateMoveHistory(moves) {
+  const history =
+    document.getElementById(
+      "move-history"
+    );
+
+  history.innerHTML = "";
+
+  moves.forEach((move) => {
+    const item =
+      document.createElement("li");
+
+    item.textContent =
+      move.notation;
+
+    history.appendChild(item);
+  });
+}
+
 async function fetchLegalMoves(row, col) {
   try {
     const response =
@@ -283,6 +302,10 @@ async function sendMoveToBackend(
 
     renderBoardFromFEN(
       currentFEN
+    );
+
+    updateMoveHistory(
+      data.moves
     );
   } catch (error) {
     console.error(

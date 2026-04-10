@@ -2,6 +2,10 @@ const express = require("express");
 const Game = require("../models/Game");
 const getInitialBoard = require("../chess/initialBoard");
 const applyMove = require("../chess/applyMove");
+const boardParser = require("../chess/boardParser");
+const movePiece = require("../chess/movePiece");
+const getLegalMoves =
+  require("../chess/getLegalMoves");
 
 const router = express.Router();
 
@@ -64,6 +68,77 @@ router.get("/", async (req, res) => {
 /* ===========================
    GET SINGLE GAME
 =========================== */
+
+router.get("/:id/legal-moves", async (req, res) => {
+  try {
+    const { row, col } = req.query;
+    const rowNum = Number(row);
+    const colNum = Number(col);
+
+    if (
+      isNaN(rowNum) ||
+      isNaN(colNum) ||
+      rowNum < 0 ||
+      rowNum > 7 ||
+      colNum < 0 ||
+      colNum > 7
+    ) {
+      return res.status(400).json({
+        message: "Invalid row or col"
+      });
+    }
+
+    const game =
+      await Game.findById(req.params.id);
+
+    if (!game) {
+      return res.status(404).json({
+        message: "Game not found"
+      });
+    }
+
+    const board =
+      typeof boardParser.parseFEN === "function"
+        ? boardParser.parseFEN(
+            game.boardState
+          )
+        : boardParser(
+            game.boardState
+          );
+
+    if (!board[rowNum]) {
+      return res.status(400).json({
+        message: "Invalid board access"
+      });
+    }
+
+    const piece =
+      board[rowNum][colNum];
+
+    if (!piece) {
+      return res.status(200).json({
+        moves: []
+      });
+    }
+
+    const moves =
+      getLegalMoves(
+        board,
+        rowNum,
+        colNum,
+        piece
+      );
+
+    return res.status(200).json({
+      moves
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error fetching legal moves",
+      error: error.message
+    });
+  }
+});
 
 router.get("/:id", async (req, res) => {
   try {

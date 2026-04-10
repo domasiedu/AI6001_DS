@@ -607,3 +607,26 @@ Check and checkmate notation fully operational.
 
 Castling state tracking initialized.
 Ready to implement castling validation logic.
+
+
+## Dev Log — Legal Move Highlighting Started
+
+Date: [Today]
+
+Completed:
+
+- Added legal move API endpoint
+- Connected frontend to request legal moves
+- Implemented highlight rendering
+- Added styling for legal moves
+
+Tests:
+
+- Verified API returns valid response
+- Confirmed frontend highlights squares
+- Tested highlight clearing
+
+Status:
+
+Legal move highlighting system initiated.
+Ready to implement full legal move generation logic.

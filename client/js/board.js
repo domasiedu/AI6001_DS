@@ -34,42 +34,52 @@ for (let row = 0; row < 8; row++) {
     square.dataset.row = row;
     square.dataset.col = col;
     square.addEventListener("click", () => {
-      handleSquareClick(square);
+      handleSquareClick(row, col);
     });
 
     board.appendChild(square);
   }
 }
 
-function handleSquareClick(square) {
-  if (selectedSquare === null) {
-    const row = Number(square.dataset.row);
-    const col = Number(square.dataset.col);
-    const piece =
-      getPieceFromBoard(row, col);
+async function handleSquareClick(row, col) {
+  const piece =
+    getPieceFromBoard(row, col);
 
-    if (!isPlayersPiece(piece)) {
-      console.log(
-        "Not your turn piece"
-      );
+  // FIRST CLICK - SELECT PIECE
+  if (!selectedSquare) {
+    if (!piece) return;
 
-      return;
-    }
+    if (!isPlayersPiece(piece)) return;
 
-    selectedSquare = square;
-    square.classList.add("selected");
+    selectedSquare = {
+      row,
+      col
+    };
+
+    await fetchLegalMoves(
+      row,
+      col
+    );
     return;
   }
 
-  const fromRow = Number(selectedSquare.dataset.row);
-  const fromCol = Number(selectedSquare.dataset.col);
-  const toRow = Number(square.dataset.row);
-  const toCol = Number(square.dataset.col);
+  // SECOND CLICK - MOVE PIECE
+  const fromRow =
+    selectedSquare.row;
 
-  sendMoveToBackend(fromRow, fromCol, toRow, toCol);
+  const fromCol =
+    selectedSquare.col;
 
-  selectedSquare.classList.remove("selected");
   selectedSquare = null;
+
+  clearHighlights();
+
+  await sendMoveToBackend(
+    fromRow,
+    fromCol,
+    row,
+    col
+  );
 }
 
 function clearBoard() {
@@ -78,6 +88,27 @@ function clearBoard() {
   for (const square of squares) {
     square.textContent = "";
   }
+}
+
+function clearHighlights() {
+  const squares = document.querySelectorAll(".square");
+
+  for (const square of squares) {
+    square.classList.remove("legal");
+  }
+}
+
+function highlightLegalMoves(moves) {
+  clearHighlights();
+
+  moves.forEach((move) => {
+    const square =
+      document.querySelector(
+        `[data-row="${move.row}"][data-col="${move.col}"]`
+      );
+
+    square.classList.add("legal");
+  });
 }
 
 function getPieceFromBoard(row, col) {
@@ -133,6 +164,32 @@ function renderBoardFromFEN(fen) {
         col++;
       }
     }
+  }
+}
+
+async function fetchLegalMoves(row, col) {
+  try {
+    const response =
+      await fetch(
+        `http://localhost:3000/api/games/${gameId}/legal-moves?row=${row}&col=${col}`
+      );
+
+    const data =
+      await response.json();
+
+    console.log(
+      "Legal moves received:",
+      data.moves
+    );
+
+    highlightLegalMoves(
+      data.moves
+    );
+  } catch (error) {
+    console.error(
+      "Legal move fetch failed:",
+      error
+    );
   }
 }
 

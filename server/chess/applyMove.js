@@ -6,6 +6,16 @@ const parseFEN = require("./boardParser");
 const generateFEN = require("./fenGenerator");
 
 function applyMove(game, fromRow, fromCol, toRow, toCol) {
+  if (Array.isArray(game)) {
+    const board = game;
+    const piece = board[fromRow][fromCol];
+
+    board[fromRow][fromCol] = null;
+    board[toRow][toCol] = piece;
+
+    return board;
+  }
+
   if (game.status === "finished") {
     throw new Error("Game already finished");
   }

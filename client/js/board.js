@@ -262,6 +262,23 @@ async function sendMoveToBackend(
       data.boardState;
     currentTurn = data.turn;
 
+    if (data.status === "finished") {
+      let message = "";
+
+      if (data.winner === "draw") {
+        message = "Game Drawn (Stalemate)";
+      } else {
+        message =
+          "Checkmate! " +
+          data.winner +
+          " wins";
+      }
+
+      setTimeout(() => {
+        alert(message);
+      }, 100);
+    }
+
     clearBoard();
 
     renderBoardFromFEN(

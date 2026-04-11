@@ -505,6 +505,15 @@ async function sendMoveToBackend(
       currentFEN
     );
 
+    if (data.status === "finished") {
+      console.log("GAME OVER:", data.winner);
+      alert(
+        "Game Over — Winner: " +
+          data.winner
+      );
+      isBoardLocked = true;
+    }
+
     clearCheckHighlight();
 
     if (data.check) {

@@ -47,3 +47,24 @@ client/css/styles.css
   transform: scale(1.08);
 
 }
+
+# prompt 3
+
+Improve background styling.
+
+File:
+client/css/styles.css
+
+-----------------------------------
+
+body {
+
+  background:
+
+    linear-gradient(
+      180deg,
+      #eef2f7,
+      #dbe3ea
+    );
+
+}

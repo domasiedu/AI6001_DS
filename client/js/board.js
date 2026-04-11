@@ -279,6 +279,27 @@ function showGameOverBanner(message) {
   );
 }
 
+function showCheckmate(winner) {
+  const modal =
+    document.getElementById(
+      "checkmateModal"
+    );
+
+  const text =
+    document.getElementById(
+      "checkmateText"
+    );
+
+  text.textContent =
+    "♟ CHECKMATE — " +
+    winner.toUpperCase() +
+    " WINS";
+
+  modal.classList.remove(
+    "hidden"
+  );
+}
+
 function showAIThinking() {
   document
     .getElementById("ai-thinking")
@@ -519,7 +540,16 @@ async function sendMoveToBackend(
       data.boardState;
     currentTurn = data.turn;
 
-    if (data.status === "finished") {
+    if (
+      data.status === "finished" &&
+      data.winner !== "draw"
+    ) {
+      showCheckmate(
+        data.winner
+      );
+    }
+
+    if (false && data.status === "finished") {
       if (data.winner === "white") {
         showGameOverBanner(
           "CHECKMATE — WHITE WINS"
@@ -556,7 +586,7 @@ async function sendMoveToBackend(
       currentFEN
     );
 
-    if (data.status === "finished") {
+    if (false && data.status === "finished") {
       console.log("GAME OVER:", data.winner);
       alert(
         "Game Over — Winner: " +
@@ -700,6 +730,30 @@ async function createNewGame() {
 }
 
 createNewGame();
+
+document
+  .getElementById("newGameBtn")
+  ?.addEventListener(
+    "click",
+    () => {
+      window.location.reload();
+    }
+  );
+
+document
+  .getElementById("closeModalBtn")
+  ?.addEventListener(
+    "click",
+    () => {
+      document
+        .getElementById(
+          "checkmateModal"
+        )
+        .classList.add(
+          "hidden"
+        );
+    }
+  );
 
 document
   .getElementById("restartBtn")

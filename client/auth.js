@@ -99,6 +99,10 @@ if (loginForm) {
             "token",
             data.token
           );
+          localStorage.setItem(
+            "userName",
+            data.user.name
+          );
 
           window.location =
             "/play";

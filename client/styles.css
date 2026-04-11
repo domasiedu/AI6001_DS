@@ -86,6 +86,40 @@ body {
   margin-top: 15px;
 }
 
+.top-controls {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 25px;
+}
+
+.left-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.right-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-weight: bold;
+}
+
+#logoutBtn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  background: #ff4d4d;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#logoutBtn:hover {
+  background: #cc0000;
+}
+
 @media (max-width: 480px) {
   .auth-container {
     width: 90%;

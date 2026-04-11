@@ -8,14 +8,22 @@
 </head>
 <body>
   <div class="app-container">
-    <div class="top-bar">
-      <div id="ai-thinking" class="hidden">
-        AI Thinking...
+    <div class="top-controls">
+      <div class="left-controls">
+        <button id="restartBtn">Restart Game</button>
+        <button id="undoBtn">Undo Move</button>
       </div>
-      <div class="controls">
-        <button id="restart-game-btn">Restart Game</button>
-        <button id="undo-btn">Undo Move</button>
+
+      <div class="right-controls">
+        <span id="userDisplay"></span>
+        <button id="logoutBtn">
+          Logout
+        </button>
       </div>
+    </div>
+
+    <div id="ai-thinking" class="hidden">
+      AI Thinking...
     </div>
 
     <div class="main-layout">

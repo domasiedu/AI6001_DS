@@ -10,44 +10,66 @@ const undoMove =
   require("../controllers/undoMove");
 const getBestMove =
   require("../ai/ChessAI");
+const authMiddleware =
+  require("../middleware/authMiddleware");
 const router = express.Router();
 
 /* ===========================
    CREATE NEW GAME
 =========================== */
 
-router.post("/", async (req, res) => {
+router.post("/", authMiddleware, async (req, res) => {
   try {
-    const { userId } = req.body;
+    const userId = req.userId;
 
-    const boardState = getInitialBoard();
+    let existingGame =
+      await Game.findOne({
+        user: userId,
+        status: "active"
+      });
 
-    const game = new Game({
-      user: userId,
-      boardState,
-      history: [boardState],
-      moves: [],
+    if (existingGame) {
+      console.log(
+        "Resuming existing game"
+      );
+
+      return res.json(existingGame);
+    }
+
+    const newGame =
+      new Game({
+        user: userId,
+        boardState:
+          "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR",
+        history: [
+          getInitialBoard()
+        ],
+        moves: [],
       turn: "white",
       status: "active",
       winner: null,
-// Initialize castling rights
-      castlingRights: {
-        whiteKingMoved: false,
-        whiteRookKingsideMoved: false,
-        whiteRookQueensideMoved: false,
-        blackKingMoved: false,
-        blackRookKingsideMoved: false,
-        blackRookQueensideMoved: false,
-      },
-    });
+        castlingRights: {
+          whiteKingMoved: false,
+          whiteRookKingsideMoved: false,
+          whiteRookQueensideMoved: false,
+          blackKingMoved: false,
+          blackRookKingsideMoved: false,
+          blackRookQueensideMoved: false,
+        },
+      });
 
-    await game.save();
+    await newGame.save();
 
-    return res.status(201).json(game);
+    console.log(
+      "New game created"
+    );
+
+    res.json(newGame);
   } catch (error) {
-    return res.status(500).json({
-      message: "Error creating game",
-      error: error.message,
+    console.error(error);
+
+    res.status(500).json({
+      message: "Game creation failed"
     });
   }
 });

@@ -1,4 +1,47 @@
 const board = document.getElementById("board");
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+    const userName =
+      localStorage.getItem(
+        "userName"
+      );
+
+    const userDisplay =
+      document.getElementById(
+        "userDisplay"
+      );
+
+    if (userDisplay && userName) {
+      userDisplay.textContent =
+        "Logged in as " +
+        userName;
+    }
+
+    const logoutBtn =
+      document.getElementById(
+        "logoutBtn"
+      );
+
+    if (logoutBtn) {
+      logoutBtn.addEventListener(
+        "click",
+        () => {
+          localStorage.removeItem(
+            "token"
+          );
+
+          localStorage.removeItem(
+            "userName"
+          );
+
+          window.location = "/";
+        }
+      );
+    }
+  }
+);
+
 let selectedSquare = null;
 let gameId = null;
 let currentTurn = "white";
@@ -556,24 +599,40 @@ async function sendMoveToBackend(
 
 async function createNewGame() {
   try {
+    const token =
+      localStorage.getItem("token");
+
+    if (!token) {
+      alert("Please login first");
+      window.location = "/";
+      return;
+    }
+
     const response =
-      await fetch("http://localhost:3000/api/games", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          userId: "69d640b123c255e292d9cab7",
-          boardState:
-            "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
-        })
-      });
+      await fetch(
+        "http://localhost:3000/api/games",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json",
+
+            Authorization: token
+          }
+
+        }
+      );
 
     const data =
       await response.json();
 
     if (!data.boardState) {
-      console.error("Invalid game response:", data);
+      console.error(
+        "Invalid game response:",
+        data
+      );
+
       return;
     }
 
@@ -581,22 +640,31 @@ async function createNewGame() {
 
     currentFEN =
       data.boardState;
-    currentTurn = data.turn;
+    currentTurn =
+      data.turn;
 
     clearBoard();
 
-    renderBoardFromFEN(currentFEN);
+    renderBoardFromFEN(
+      currentFEN
+    );
 
-    console.log("Game created:", gameId);
+    console.log(
+      "Game loaded:",
+      gameId
+    );
   } catch (error) {
-    console.error("Game creation failed:", error);
+    console.error(
+      "Game creation failed:",
+      error
+    );
   }
 }
 
 createNewGame();
 
 document
-  .getElementById("restart-game-btn")
+  .getElementById("restartBtn")
   .addEventListener("click", async () => {
     selectedSquare = null;
     clearHighlights();
@@ -626,7 +694,7 @@ document
   });
 
 document
-  .getElementById("undo-btn")
+  .getElementById("undoBtn")
   .addEventListener("click", async () => {
     try {
       const response =

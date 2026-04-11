@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const cors = require("cors");
 const connectDB = require("./db");
-const authRoutes = require("./api/auth");
+const authRoutes = require("./routes/auth");
 const gameRoutes = require("./api/games");
 
 

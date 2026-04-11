@@ -18,6 +18,14 @@ const pieces = {
   K: "♔",
   P: "♙"
 };
+const pieceValues = {
+  p: 1,
+  n: 3,
+  b: 3,
+  r: 5,
+  q: 9,
+  k: 0
+};
 
 for (let row = 0; row < 8; row++) {
   for (let col = 0; col < 8; col++) {
@@ -228,6 +236,18 @@ function showGameOverBanner(message) {
   );
 }
 
+function showAIThinking() {
+  document
+    .getElementById("ai-thinking")
+    .classList.remove("hidden");
+}
+
+function hideAIThinking() {
+  document
+    .getElementById("ai-thinking")
+    .classList.add("hidden");
+}
+
 function getPieceFromBoard(row, col) {
   const rows = currentFEN.split("/");
   let currentCol = 0;
@@ -346,6 +366,39 @@ function updateCapturedPieces(moves) {
   });
 }
 
+function updateMaterialScore(moves) {
+  let whiteScore = 0;
+  let blackScore = 0;
+
+  moves.forEach((move) => {
+    if (move.captured) {
+      const value =
+        pieceValues[
+          move.captured.toLowerCase()
+        ];
+
+      if (
+        move.captured ===
+        move.captured.toLowerCase()
+      ) {
+        whiteScore += value;
+      } else {
+        blackScore += value;
+      }
+    }
+  });
+
+  document
+    .getElementById("white-material")
+    .textContent =
+      `White Material: +${whiteScore}`;
+
+  document
+    .getElementById("black-material")
+    .textContent =
+      `Black Material: +${blackScore}`;
+}
+
 async function fetchLegalMoves(row, col) {
   try {
     const response =
@@ -380,6 +433,8 @@ async function sendMoveToBackend(
   toCol
 ) {
   try {
+    showAIThinking();
+
     const response =
       await fetch(
         `http://localhost:3000/api/games/${gameId}/move`,
@@ -476,11 +531,17 @@ async function sendMoveToBackend(
     updateCapturedPieces(
       data.moves
     );
+
+    updateMaterialScore(
+      data.moves
+    );
   } catch (error) {
     console.error(
       "Move failed:",
       error
     );
+  } finally {
+    hideAIThinking();
   }
 }
 
@@ -551,6 +612,8 @@ document
     const blackCaptures =
       document.getElementById("black-captures");
     if (blackCaptures) blackCaptures.innerHTML = "";
+
+    updateMaterialScore([]);
   });
 
 document
@@ -583,6 +646,10 @@ document
       );
 
       updateCapturedPieces(
+        data.moves
+      );
+
+      updateMaterialScore(
         data.moves
       );
     } catch (error) {

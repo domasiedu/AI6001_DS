@@ -21,6 +21,12 @@
   cursor: pointer;
 }
 
+#ai-thinking {
+  font-weight: bold;
+  color: orange;
+  margin-bottom: 8px;
+}
+
 #game-over-banner {
   font-size: 22px;
   font-weight: bold;
@@ -100,6 +106,11 @@
 #black-captures {
   min-height: 30px;
   font-size: 20px;
+}
+
+#material-display {
+  margin-bottom: 10px;
+  font-weight: bold;
 }
 
 #move-history {

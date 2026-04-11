@@ -32,7 +32,11 @@ app.use(express.static(clientPath));
 
 // Root route
 app.get("/", (req, res) => {
-  res.sendFile(path.join(clientPath, "index.html"));
+  res.redirect("/play");
+});
+
+app.get("/play", (req, res) => {
+  res.sendFile(path.join(clientPath, "play.html"));
 });
 
 

@@ -630,3 +630,7 @@ Status:
 
 Legal move highlighting system initiated.
 Ready to implement full legal move generation logic.
+
+# AI implementation using Stock Fish
+
+

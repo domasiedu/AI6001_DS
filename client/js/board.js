@@ -449,6 +449,14 @@ async function fetchLegalMoves(row, col) {
         `http://localhost:3000/api/games/${gameId}/legal-moves?row=${row}&col=${col}`
       );
 
+    if (response.status === 401) {
+      alert("Session expired. Please login again.");
+      localStorage.removeItem("token");
+      localStorage.removeItem("userName");
+      window.location = "/";
+      return;
+    }
+
     const data =
       await response.json();
     console.log("Legal moves response:", data);
@@ -624,6 +632,14 @@ async function createNewGame() {
         }
       );
 
+    if (response.status === 401) {
+      alert("Session expired. Please login again.");
+      localStorage.removeItem("token");
+      localStorage.removeItem("userName");
+      window.location = "/";
+      return;
+    }
+
     const data =
       await response.json();
 
@@ -702,6 +718,14 @@ document
           `http://localhost:3000/api/games/${gameId}/undo`,
           { method: "PUT" }
         );
+
+      if (response.status === 401) {
+        alert("Session expired. Please login again.");
+        localStorage.removeItem("token");
+        localStorage.removeItem("userName");
+        window.location = "/";
+        return;
+      }
 
       const data =
         await response.json();

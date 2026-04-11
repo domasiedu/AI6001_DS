@@ -59,6 +59,16 @@
     </div>
   </div>
 
+  <script>
+    const token =
+      localStorage.getItem("token");
+
+    if (!token) {
+      alert("Please login first");
+      window.location = "/";
+    }
+  </script>
+
   <script src="js/board.js"></script>
 </body>
 </html>

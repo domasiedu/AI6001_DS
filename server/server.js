@@ -28,11 +28,15 @@ console.log("Game routes loaded:", typeof gameRoutes);
 app.use("/api/games", gameRoutes);
 
 // ✅ Static files AFTER API routes
-app.use(express.static(clientPath));
+app.use(express.static(clientPath, { index: false }));
 
 // Root route
 app.get("/", (req, res) => {
-  res.redirect("/play");
+  res.sendFile(path.join(clientPath, "login.html"));
+});
+
+app.get("/register", (req, res) => {
+  res.sendFile(path.join(clientPath, "register.html"));
 });
 
 app.get("/play", (req, res) => {

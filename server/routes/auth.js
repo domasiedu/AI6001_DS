@@ -8,42 +8,81 @@ const JWT_SECRET = "your_secret_key";
 
 router.post("/register", async (req, res) => {
   try {
+    console.log(
+      "REGISTER BODY:",
+      req.body
+    );
+
     const {
       name,
       email,
-      password,
+      password
     } = req.body;
 
-    const existingUser = await User.findOne({
-      email,
-    });
+    if (!name || !email || !password) {
+      console.log(
+        "Missing fields"
+      );
 
-    if (existingUser) {
       return res.status(400).json({
-        message: "User already exists",
+        message:
+          "All fields required"
       });
     }
 
-    const hashedPassword = await bcrypt.hash(
-      password,
-      10
-    );
+    const existingUser =
+      await User.findOne({
+        email
+      });
 
-    const user = new User({
-      name,
-      email,
-      password: hashedPassword,
-    });
+    if (existingUser) {
+      console.log(
+        "User exists:",
+        email
+      );
+
+      return res.status(400).json({
+        message:
+          "User already exists"
+      });
+    }
+
+    const hashedPassword =
+      await bcrypt.hash(
+        password,
+        10
+      );
+
+    const user =
+      new User({
+        name,
+        email,
+        password:
+          hashedPassword
+      });
 
     await user.save();
 
+    console.log(
+      "User registered:",
+      email
+    );
+
     res.status(201).json({
-      message: "User registered successfully",
+      message:
+        "User registered successfully"
     });
   } catch (error) {
+    console.error(
+      "REGISTER ERROR:",
+      error
+    );
+
     res.status(500).json({
-      message: "Register failed",
-      error: error.message,
+      message:
+        "Register failed",
+      error:
+        error.message
     });
   }
 });

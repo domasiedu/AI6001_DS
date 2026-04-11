@@ -61,6 +61,20 @@ const pieces = {
   K: "♔",
   P: "♙"
 };
+const pieceSymbols = {
+  p: "♟",
+  r: "♜",
+  n: "♞",
+  b: "♝",
+  q: "♛",
+  k: "♚",
+  P: "♙",
+  R: "♖",
+  N: "♘",
+  B: "♗",
+  Q: "♕",
+  K: "♔"
+};
 const pieceValues = {
   p: 1,
   n: 3,
@@ -104,6 +118,18 @@ function toSquareName(row, col) {
   return `${files[col]}${8 - row}`;
 }
 
+function getPieceFromNotation(notation) {
+  if (!notation) return "P";
+
+  const firstChar = notation.charAt(0);
+
+  if ("RNBQK".includes(firstChar)) {
+    return firstChar;
+  }
+
+  return "P";
+}
+
 async function handleSquareClick(row, col) {
   if (
     document
@@ -130,6 +156,15 @@ async function handleSquareClick(row, col) {
       row,
       col
     };
+
+    const square =
+      document.querySelector(
+        `[data-row="${row}"][data-col="${col}"]`
+      );
+
+    square.classList.add(
+      "selected"
+    );
 
     await fetchLegalMoves(
       row,
@@ -177,6 +212,10 @@ function clearHighlights() {
 
   for (const square of squares) {
     square.classList.remove("legal");
+    square.classList.remove("capture");
+    square.classList.remove(
+      "selected"
+    );
   }
 }
 
@@ -189,7 +228,21 @@ function highlightLegalMoves(moves) {
         `[data-row="${move.row}"][data-col="${move.col}"]`
       );
 
-    square.classList.add("legal");
+    const piece =
+      getPieceFromBoard(
+        move.row,
+        move.col
+      );
+
+    if (piece) {
+      square.classList.add(
+        "capture"
+      );
+    } else {
+      square.classList.add(
+        "legal"
+      );
+    }
   });
 }
 
@@ -386,8 +439,29 @@ function updateMoveHistory(moves) {
     const item =
       document.createElement("li");
 
+    const notation =
+      move.notation || "";
+
+    const piece =
+      getPieceFromNotation(notation);
+
+    const symbol =
+      pieceSymbols[piece] || "♙";
+
+    const isCapture =
+      notation.includes("x");
+
+    let display =
+      isCapture
+        ? symbol + "×"
+        : symbol;
+
+    if (notation.includes("#")) {
+      display += "#";
+    }
+
     item.textContent =
-      move.notation;
+      display;
 
     history.appendChild(item);
   });

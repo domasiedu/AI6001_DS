@@ -247,8 +247,8 @@ body {
 }
 
 #board {
-  width: min(80vw, 640px);
-  height: min(80vw, 640px);
+  width: min(90vw, 520px);
+  height: min(90vw, 520px);
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   grid-template-rows: repeat(8, 1fr);
@@ -346,9 +346,9 @@ h3 {
   width: 100%;
   height: 100%;
   display: flex;
-  align-items: center;
   justify-content: center;
-  font-size: 42px;
+  align-items: center;
+  font-size: calc(32px + 1vw);
   font-weight: bold;
   cursor: pointer;
   user-select: none;
@@ -383,14 +383,16 @@ h3 {
 }
 
 .square:hover {
-  outline: 2px solid rgba(0, 0, 0, 0.2);
+  box-shadow:
+    inset 0 0 12px
+    rgba(255, 255, 255, 0.5);
   cursor: pointer;
-  transform:
-    scale(1.02);
 }
 
 .selected {
-  outline: 3px solid #3b82f6;
+  outline:
+    3px solid
+    #FFD700;
   outline-offset: -3px;
 }
 
@@ -404,9 +406,18 @@ h3 {
 
 .legal {
   background-color:
-    rgba(34, 197, 94, 0.65) !important;
-  transition:
-    background-color 0.15s ease;
+    rgba(76, 175, 80, 0.6);
+  box-shadow:
+    inset 0 0 10px
+    rgba(0, 0, 0, 0.4);
+}
+
+.capture {
+  background-color:
+    rgba(244, 67, 54, 0.6);
+  box-shadow:
+    inset 0 0 12px
+    rgba(0, 0, 0, 0.5);
 }
 
 .last-move {
@@ -437,6 +448,23 @@ h3 {
 }
 
 /* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .top-controls {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .left-controls {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .right-controls {
+    justify-content: center;
+  }
+}
+
 @media (max-width: 900px) {
   .main-layout {
     flex-direction: column;
@@ -459,6 +487,13 @@ h3 {
 
   .square {
     font-size: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  button {
+    padding: 8px 12px;
+    font-size: 14px;
   }
 }
 

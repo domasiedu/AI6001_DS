@@ -1,3 +1,15 @@
+Create Dockerfile inside docker folder.
+
+-----------------------------------
+STEP 1 — Create Dockerfile
+-----------------------------------
+
+Create:
+
+docker/Dockerfile
+
+Add:
+
 FROM node:20
 
 WORKDIR /app

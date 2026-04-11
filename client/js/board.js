@@ -643,6 +643,28 @@ async function createNewGame() {
     const data =
       await response.json();
 
+    const banner =
+      document.getElementById(
+        "gameBanner"
+      );
+
+    if (banner) {
+      banner.classList.remove(
+        "hidden"
+      );
+
+      if (data._id) {
+        banner.textContent =
+          "♟ Game Loaded";
+      }
+
+      setTimeout(() => {
+        banner.classList.add(
+          "hidden"
+        );
+      }, 3000);
+    }
+
     if (!data.boardState) {
       console.error(
         "Invalid game response:",

@@ -1,11 +1,20 @@
 const { spawn } =
   require("child_process");
 
-const path =
-  require("path");
+const os =
+  require("os");
 
-const STOCKFISH_PATH =
-  "C:\\stockfish\\stockfish-windows-x86-64-avx2.exe";
+let STOCKFISH_PATH;
+
+if (os.platform() === "win32") {
+  // Windows local development
+  STOCKFISH_PATH =
+    "C:\\stockfish\\stockfish-windows-x86-64-avx2.exe";
+} else {
+  // Docker / Linux
+  STOCKFISH_PATH =
+    "/usr/games/stockfish";
+}
 
 function getBestMove(fen) {
   return new Promise((resolve, reject) => {

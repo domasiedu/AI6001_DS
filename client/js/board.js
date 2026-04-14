@@ -805,6 +805,76 @@ async function createNewGame() {
   }
 }
 
+async function restartGame() {
+  try {
+    const token =
+      localStorage.getItem("token");
+
+    if (!token) {
+      alert("Please login first");
+      window.location = "/";
+      return;
+    }
+
+    const response =
+      await fetch(
+        "http://localhost:3000/api/games/restart",
+        {
+          method: "POST",
+          headers: {
+            Authorization: token,
+            "Content-Type":
+              "application/json"
+          }
+        }
+      );
+
+    if (response.status === 401) {
+      alert("Session expired. Please login again.");
+      localStorage.removeItem("token");
+      localStorage.removeItem("userName");
+      window.location = "/";
+      return;
+    }
+
+    const data =
+      await response.json();
+
+    if (!response.ok) {
+      console.error(
+        "Restart failed:",
+        data
+      );
+      return;
+    }
+
+    if (!data.boardState) {
+      console.error(
+        "Invalid restart response:",
+        data
+      );
+      return;
+    }
+
+    gameId = data._id;
+    currentFEN =
+      data.boardState;
+    currentTurn =
+      data.turn || "white";
+
+    clearBoard();
+
+    renderBoardFromFEN(
+      currentFEN
+    );
+  } catch (error) {
+    console.error(
+      "Restart error:",
+      error
+    );
+  }
+}
+
 createNewGame();
 
 document
@@ -844,7 +914,7 @@ document
     banner.textContent = "";
     banner.classList.add("hidden");
 
-    await createNewGame();
+    await restartGame();
 
     const history =
       document.getElementById("move-history");

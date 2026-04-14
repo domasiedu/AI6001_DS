@@ -75,6 +75,68 @@ router.post("/", authMiddleware, async (req, res) => {
 });
 
 /* ===========================
+   RESTART ACTIVE GAME
+=========================== */
+
+router.post(
+  "/restart",
+  authMiddleware,
+  async (req, res) => {
+    try {
+      const userId = req.userId;
+      const startingBoard =
+        getInitialBoard();
+
+      const game =
+        await Game.findOne({
+          user: userId,
+          status: "active"
+        }).sort({ createdAt: -1 });
+
+      if (!game) {
+        return res.status(404).json({
+          error:
+            "No active game found"
+        });
+      }
+
+      game.boardState =
+        startingBoard;
+      game.turn = "white";
+      game.history = [
+        startingBoard
+      ];
+      game.moves = [];
+      game.status = "active";
+      game.winner = null;
+      game.enPassantTarget =
+        undefined;
+      game.castlingRights = {
+        whiteKingMoved: false,
+        whiteRookKingsideMoved: false,
+        whiteRookQueensideMoved: false,
+        blackKingMoved: false,
+        blackRookKingsideMoved: false,
+        blackRookQueensideMoved: false
+      };
+
+      await game.save();
+
+      return res.json(game);
+    } catch (error) {
+      console.error(
+        "Restart failed:",
+        error
+      );
+
+      return res.status(500).json({
+        error: "Restart failed"
+      });
+    }
+  }
+);
+
+/* ===========================
    GET ALL GAMES (HISTORY)
 =========================== */
 

@@ -1,4 +1,6 @@
-const board = document.getElementById("board");
+const board =
+  document.getElementById("chessboard") ||
+  document.getElementById("board");
 document.addEventListener(
   "DOMContentLoaded",
   () => {

@@ -9,7 +9,7 @@ const gameRoutes = require("./api/games");
 console.log("Auth routes loaded:", typeof authRoutes);
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 const clientPath = path.join(__dirname, "..", "client");
 

@@ -1,15 +1,23 @@
 version: "3.9"
 
 services:
-
-
   server:
     build: .
-
     container_name: chess-server
-
+    depends_on:
+      - mongo
     ports:
       - "3000:3000"
-    network_mode: host
     environment:
-      - MONGO_URI=mongodb+srv://dasiedu_db_user:0VQ1YgzP2AYHHuh1@cluster0.zhboaqd.mongodb.net/?appName=Cluster0
+      - PORT=3000
+      - MONGO_URI=mongodb://mongo:27017/chessdb
+
+  mongo:
+    image: mongo:7
+    container_name: chess-mongo
+    restart: unless-stopped
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:

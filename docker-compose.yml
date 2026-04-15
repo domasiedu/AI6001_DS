@@ -12,4 +12,4 @@ services:
       - "3000:3000"
 
     environment:
-      - MONGO_URI=mongodb+srv://dokwakye_db_user:mKRQ94owZx2azAaf@mun-cluster.dzzbucc.mongodb.net/mungpt_dev?appName=mun-chess
+      - MONGO_URI=mongodb+srv://dasiedu_db_user:0VQ1YgzP2AYHHuh1@cluster0.zhboaqd.mongodb.net/?appName=mun-chess

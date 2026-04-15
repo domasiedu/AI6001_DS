@@ -2,16 +2,6 @@ version: "3.9"
 
 services:
 
-  mongo:
-    image: mongo:7
-
-    container_name: chess-mongo
-
-    ports:
-      - "27018:27017"
-
-    volumes:
-      - mongo_data:/data/db
 
   server:
     build: .
@@ -21,11 +11,5 @@ services:
     ports:
       - "3000:3000"
 
-    depends_on:
-      - mongo
-
     environment:
-      - MONGO_URI=mongodb://mongo:27018/chessdb
-
-volumes:
-  mongo_data:
+      - MONGO_URI=mongodb+srv://dokwakye_db_user:mKRQ94owZx2azAaf@mun-cluster.dzzbucc.mongodb.net/mungpt_dev?appName=mun-chess

@@ -14,9 +14,7 @@ services:
       - mongo_data:/data/db
 
   server:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
+    build: .
 
     container_name: chess-server
 

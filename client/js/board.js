@@ -544,7 +544,7 @@ async function fetchLegalMoves(row, col) {
   try {
     const response =
       await fetch(
-        `http://localhost:3000/api/games/${gameId}/legal-moves?row=${row}&col=${col}`
+        `/api/games/${gameId}/legal-moves?row=${row}&col=${col}`
       );
 
     if (response.status === 401) {
@@ -586,7 +586,7 @@ async function sendMoveToBackend(
 
     const response =
       await fetch(
-        `http://localhost:3000/api/games/${gameId}/move`,
+        `/api/games/${gameId}/move`,
         {
           method: "PUT",
           headers: {
@@ -731,7 +731,7 @@ async function createNewGame() {
 
     const response =
       await fetch(
-        "http://localhost:3000/api/games",
+        "/api/games",
         {
           method: "POST",
 
@@ -831,7 +831,7 @@ async function restartGame() {
 
     const response =
       await fetch(
-        "http://localhost:3000/api/games/restart",
+        "/api/games/restart",
         {
           method: "POST",
           headers: {
@@ -993,7 +993,7 @@ document
     try {
       const response =
         await fetch(
-          `http://localhost:3000/api/games/${gameId}/undo`,
+          `/api/games/${gameId}/undo`,
           { method: "PUT" }
         );
 

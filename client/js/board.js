@@ -49,6 +49,7 @@ let gameId = null;
 let currentTurn = "white";
 let currentFEN =
   "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
+let currentGame = null;
 const pieces = {
   r: "♜",
   n: "♞",
@@ -615,6 +616,12 @@ async function sendMoveToBackend(
     currentFEN =
       data.boardState;
     currentTurn = data.turn;
+    currentGame = {
+      ...(currentGame || {}),
+      moves: Array.isArray(data.moves)
+        ? data.moves
+        : []
+    };
 
     if (
       data.status === "finished" &&
@@ -786,6 +793,12 @@ async function createNewGame() {
       data.boardState;
     currentTurn =
       data.turn;
+    currentGame = {
+      ...(data || {}),
+      moves: Array.isArray(data.moves)
+        ? data.moves
+        : []
+    };
 
     clearBoard();
 
@@ -861,6 +874,13 @@ async function restartGame() {
       data.boardState;
     currentTurn =
       data.turn || "white";
+    currentGame = {
+      ...(currentGame || {}),
+      _id: data._id,
+      moves: Array.isArray(data.moves)
+        ? data.moves
+        : []
+    };
 
     clearBoard();
 
@@ -873,6 +893,38 @@ async function restartGame() {
       error
     );
   }
+}
+
+function startReplay() {
+  if (
+    !currentGame ||
+    !currentGame.moves
+  ) {
+    alert("No moves available for replay.");
+    return;
+  }
+
+  const moveList =
+    currentGame.moves;
+
+  if (moveList.length === 0) {
+    alert("No moves to replay.");
+    return;
+  }
+
+  if (
+    !window.ChessReplayEngine ||
+    typeof window.ChessReplayEngine.replayMoves !== "function"
+  ) {
+    alert("Replay engine is not loaded.");
+    return;
+  }
+
+  console.log("Replay started.");
+
+  window.ChessReplayEngine.replayMoves(moveList, {
+    delayMs: 700
+  });
 }
 
 createNewGame();
@@ -932,6 +984,10 @@ document
   });
 
 document
+  .getElementById("replayBtn")
+  .addEventListener("click", startReplay);
+
+document
   .getElementById("undoBtn")
   .addEventListener("click", async () => {
     try {
@@ -957,6 +1013,12 @@ document
 
       currentTurn =
         data.turn;
+      currentGame = {
+        ...(currentGame || {}),
+        moves: Array.isArray(data.moves)
+          ? data.moves
+          : []
+      };
 
       clearBoard();
 

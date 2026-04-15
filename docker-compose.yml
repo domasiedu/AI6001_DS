@@ -8,7 +8,7 @@ services:
     container_name: chess-mongo
 
     ports:
-      - "27017:27017"
+      - "27018:27017"
 
     volumes:
       - mongo_data:/data/db
@@ -25,7 +25,7 @@ services:
       - mongo
 
     environment:
-      - MONGO_URI=mongodb://mongo:27017/chessdb
+      - MONGO_URI=mongodb://mongo:27018/chessdb
 
 volumes:
   mongo_data:

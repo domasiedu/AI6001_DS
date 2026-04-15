@@ -10,6 +10,6 @@ services:
 
     ports:
       - "3000:3000"
-
+    network_mode: host
     environment:
       - MONGO_URI=mongodb+srv://dasiedu_db_user:0VQ1YgzP2AYHHuh1@cluster0.zhboaqd.mongodb.net/?appName=Cluster0
